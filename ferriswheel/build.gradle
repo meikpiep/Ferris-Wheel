@@ -38,6 +38,10 @@ android {
             withSourcesJar()
         }
     }
+
+    lintOptions {
+        abortOnError true
+    }
 }
 
 project.afterEvaluate {
