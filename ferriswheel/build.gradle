@@ -3,9 +3,6 @@ apply plugin: 'kotlin-android'
 
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayRepoName = 'Ferris-Wheel'
-
     groupId = 'ru.github.igla'
     libraryName = 'Ferris-Wheel'
     artifact = 'ferriswheel'
@@ -40,11 +37,19 @@ android {
     }
 }
 
-android {
-    lintOptions {
-        abortOnError true
+project.afterEvaluate {
+    publishing {
+        publications {
+            libraryProject(MavenPublication) {
+                setGroupId 'ru.github.igla'
+                setArtifactId 'ferriswheel'
+                version '1.3.3'
+                artifact bundleReleaseAar
+            }
+        }
     }
 }
+
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 
@@ -67,6 +72,3 @@ dependencies {
 tasks.withType(Javadoc).all {
     enabled = false
 }
-
-apply from: 'install.gradle'
-apply from: 'bintray.gradle'
