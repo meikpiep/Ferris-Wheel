@@ -13,10 +13,12 @@ import kotlin.math.pow
  */
 
 internal class StateController(
-        private val callback: Drawable.Callback,
-        private val context: Context,
-        private var viewConfig: WheelViewConfig,
-        bounds: Rect) {
+    private val drawable: WheelDrawable,
+    private val callback: Drawable.Callback,
+    private val context: Context,
+    private var viewConfig: WheelViewConfig,
+    bounds: Rect
+) {
 
     private var lastBounds: Rect = bounds
     private var cabinImages: List<CabinImage>
@@ -34,7 +36,7 @@ internal class StateController(
     private val rotateListener = object : OnAngleChangeListener {
         override fun onValueChange(angle: Float) {
             wheelBaseDrawer.rotateAngle = angle
-            callback.invalidateDrawable(null)
+            callback.invalidateDrawable(drawable)
         }
     }
 
@@ -43,7 +45,7 @@ internal class StateController(
             cabinImages.forEachNoIterator { item ->
                 item.tiltAngle = angle
             }
-            callback.invalidateDrawable(null)
+            callback.invalidateDrawable(drawable)
         }
     }
 

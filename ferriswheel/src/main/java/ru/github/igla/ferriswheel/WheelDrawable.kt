@@ -15,12 +15,12 @@ internal class WheelDrawable(private val context: Context) :
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     private val drawableCallback = object : Callback {
-        override fun invalidateDrawable(who: Drawable?) = invalidateSelf()
+        override fun invalidateDrawable(who: Drawable) = invalidateSelf()
 
-        override fun unscheduleDrawable(who: Drawable?, what: Runnable) {
+        override fun unscheduleDrawable(who: Drawable, what: Runnable) {
         }
 
-        override fun scheduleDrawable(who: Drawable?, what: Runnable, time: Long) {
+        override fun scheduleDrawable(who: Drawable, what: Runnable, time: Long) {
         }
     }
 
@@ -31,7 +31,7 @@ internal class WheelDrawable(private val context: Context) :
 
     fun build(viewConfig: WheelViewConfig) {
         if (stateController == null) {
-            stateController = StateController(drawableCallback, context, viewConfig, bounds)
+            stateController = StateController(this, drawableCallback, context, viewConfig, bounds)
         } else {
             stateController?.setData(viewConfig)
         }
@@ -60,7 +60,7 @@ internal class WheelDrawable(private val context: Context) :
 
     override fun getOpacity() = if (paint.alpha < 255) PixelFormat.TRANSLUCENT else PixelFormat.OPAQUE
 
-    override fun setColorFilter(colorFilter: ColorFilter) {
+    override fun setColorFilter(colorFilter: ColorFilter?) {
         paint.colorFilter = colorFilter
     }
 
