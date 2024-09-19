@@ -75,7 +75,3 @@ java {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
 }
-
-tasks.withType(Javadoc).all {
-    enabled = false
-}
