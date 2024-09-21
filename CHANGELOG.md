@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 1.3.1 *(2014-09-21)*
+----------
+
+Adds build metadata for JitPack to fix its build.
+
 Version 1.3.0 *(2014-09-21)*
 ----------
 
