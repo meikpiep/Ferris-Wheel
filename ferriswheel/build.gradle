@@ -2,10 +2,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'maven-publish'
 
-group = 'ru.github.igla'
-version = '1.3.0-SNAPSHOT'
-
 ext {
+    groupId = 'ru.github.igla'
+    libraryName = 'Ferris-Wheel'
+    artifact = 'ferriswheel'
+    libraryVersion = '1.3.0-SNAPSHOT'
     libraryDescription = 'Simple android library to present an animated ferris wheel'
 
     siteUrl = 'https://github.com/iglaweb/Ferris-Wheel'
@@ -20,8 +21,11 @@ ext {
     licenses = ["Apache-2.0"]
 }
 
+group = groupId
+version = libraryVersion
+
 android {
-    namespace = 'ru.github.igla.ferriswheel'
+    namespace = groupId + '.' + artifact
 
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
@@ -52,9 +56,9 @@ project.afterEvaluate {
     publishing {
         publications {
             libraryProject(MavenPublication) {
-                setGroupId 'ru.github.igla'
-                setArtifactId 'ferriswheel'
-                version '1.3.0-SNAPSHOT'
+                setGroupId groupId
+                setArtifactId artifact
+                version libraryVersion
                 artifact bundleReleaseAar
             }
         }
