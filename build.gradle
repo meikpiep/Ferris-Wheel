@@ -5,7 +5,6 @@ buildscript {
             'buildTools'    : '34.0.0',
             'minSdk'        : 15,
             'targetSdk'     : 34,
-            'supportLibrary': '27.1.1',
             'kotlin'        : '1.9.21'
     ]
 
