@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Unreleased
+Version 1.3.0 *(2014-09-21)*
 ----------
 
 First release of fork with group and artifact id 'org.piepmeyer.ferriswheel'.
@@ -15,7 +15,7 @@ Will be distributed via JitPack (was JCenter).
 
 
 Version 1.2 *(2018-08-03)*
---------------------------
+----------------------------
 
  * Add new API to add click listener for cabin
  * Add isAutoRotate attribute
