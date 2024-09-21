@@ -1,8 +1,10 @@
 # Ferris Wheel View
 
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Ferris%20Wheel%20View-green.svg?style=flat)](https://android-arsenal.com/details/1/6803)
-[![Build Status][build-status-svg]][build-status-link]
-[![Download](https://api.bintray.com/packages/iglaweb/maven/Ferris-Wheel/images/download.svg)](https://bintray.com/iglaweb/maven/Ferris-Wheel/_latestVersion)
+This is a fork of [iglaweb/Ferris-Wheel](https://github.com/iglaweb/Ferris-Wheel) which had its most
+recent release in 2018 (until now) and its distribution repository was JCenter which was recently
+shutdown completely. This fork aims to fill the gap and provide a ferris wheel with updated
+dependencies and distribution via JitPack.
+
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 ![image](/art/logo.png)
