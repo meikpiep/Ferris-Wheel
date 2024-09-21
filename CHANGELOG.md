@@ -1,8 +1,21 @@
 Change Log
 ==========
 
+Unreleased
+----------
+
+First release of fork with group and artifact id 'org.piepmeyer.ferriswheel'.
+Updated all versions used by this project.
+
+ * Use Kotlin version 2.0.20 (was 1.2.60)
+ * Use Gradle version 8.9 (was 4.8)
+ * Use Android SDK 35 (was 27)
+
+Will be distributed via JitPack (was JCenter).
+
+
 Version 1.2 *(2018-08-03)*
-----------------------------
+--------------------------
 
  * Add new API to add click listener for cabin
  * Add isAutoRotate attribute
