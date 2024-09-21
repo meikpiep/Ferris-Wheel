@@ -5,7 +5,7 @@ buildscript {
             'buildTools'    : '34.0.0',
             'minSdk'        : 15,
             'targetSdk'     : 34,
-            'kotlin'        : '1.9.21'
+            'kotlin'        : '2.0.20'
     ]
 
     repositories {
