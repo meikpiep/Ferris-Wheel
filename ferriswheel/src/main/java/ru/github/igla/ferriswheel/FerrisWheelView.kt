@@ -29,10 +29,10 @@ class FerrisWheelView : View {
         fun onClickCabin(cabinNumber: Int, e: MotionEvent)
     }
 
+    private val cabinLineColorDefault: Int = context.getColorRes(R.color.fwv_cabin_line_color)
     private val cabinColorsDefault: List<CabinStyle> = resources.getStringArray(R.array.cabin_colors_array).map { color ->
         CabinStyle(Color.parseColor(color), cabinLineColorDefault)
     }
-    private val cabinLineColorDefault: Int = context.getColorRes(R.color.fwv_cabin_line_color)
     private val baseColorDefault: Int = context.getColorRes(R.color.fwv_base_color)
     private val wheelColorDefault: Int = context.getColorRes(R.color.fwv_wheel_color)
     private val coreStyleDefault: CoreStyle = CoreStyle(
