@@ -3,18 +3,17 @@ apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'maven-publish'
 
 ext {
-    groupId = 'ru.github.igla'
+    groupId = 'org.piepmeyer'
     libraryName = 'Ferris-Wheel'
     artifact = 'ferriswheel'
     libraryVersion = '1.3.0-SNAPSHOT'
     libraryDescription = 'Simple android library to present an animated ferris wheel'
 
-    siteUrl = 'https://github.com/iglaweb/Ferris-Wheel'
-    gitUrl = 'https://github.com/iglaweb/Ferris-Wheel.git'
+    siteUrl = 'https://github.com/meikpiep/Ferris-Wheel'
+    gitUrl = 'https://github.com/meikpiep/Ferris-Wheel.git'
 
-    developerId = 'iglaweb'
-    developerName = 'Igor Lashkov'
-    developerEmail = 'igor-lashkov@ya.ru'
+    developerName = 'Meik Piepmeyer'
+    developerEmail = 'meik.piepmeyer@gmail.com'
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
