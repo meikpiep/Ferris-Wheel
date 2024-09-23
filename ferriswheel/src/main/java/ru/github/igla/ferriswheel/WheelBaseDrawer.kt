@@ -2,7 +2,7 @@ package ru.github.igla.ferriswheel
 
 import android.content.Context
 import android.graphics.*
-import org.piepmeyer.ferriswheel.R
+import com.github.meikpiep.ferriswheel.R
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin

@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Unreleased
+----------
+
+Change group id from 'org.piepmeyer' to 'com.github.meikpiep' to comply with JitPack.
+
 Version 1.3.1 *(2014-09-21)*
 ----------
 

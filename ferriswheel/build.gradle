@@ -3,7 +3,7 @@ apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'maven-publish'
 
 ext {
-    groupId = 'org.piepmeyer'
+    groupId = 'com.github.meikpiep'
     libraryName = 'Ferris-Wheel'
     artifact = 'ferriswheel'
     libraryVersion = '1.3.2-SNAPSHOT'

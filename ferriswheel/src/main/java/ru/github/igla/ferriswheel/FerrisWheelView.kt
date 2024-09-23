@@ -10,7 +10,7 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import org.piepmeyer.ferriswheel.R
+import com.github.meikpiep.ferriswheel.R
 
 
 /**

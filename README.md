@@ -45,7 +45,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    implementation 'ru.github.igla:ferriswheel:1.2'
+    implementation 'com.github.meikpiep:ferriswheel:1.3.2'
 }
 ```
 
