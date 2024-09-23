@@ -1,18 +1,18 @@
 Change Log
 ==========
 
-Unreleased
-----------
+Version 1.3.2 *(2014-09-23)*
+----------------------------
 
 Change group id from 'org.piepmeyer' to 'com.github.meikpiep' to comply with JitPack.
 
 Version 1.3.1 *(2014-09-21)*
-----------
+----------------------------
 
 Adds build metadata for JitPack to fix its build.
 
 Version 1.3.0 *(2014-09-21)*
-----------
+----------------------------
 
 First release of fork with group and artifact id 'org.piepmeyer.ferriswheel'.
 Updated all versions used by this project.
@@ -25,7 +25,7 @@ Will be distributed via JitPack (was JCenter).
 
 
 Version 1.2 *(2018-08-03)*
-----------------------------
+--------------------------
 
  * Add new API to add click listener for cabin
  * Add isAutoRotate attribute
