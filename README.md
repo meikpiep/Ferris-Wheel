@@ -40,7 +40,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    implementation 'com.github.meikpiep:ferriswheel:1.3.2'
+    implementation 'com.github.meikpiep:Ferris-Wheel:1.3.2'
 }
 ```
 
@@ -49,7 +49,7 @@ dependencies {
 ``` maven
 <dependency>
   <groupId>com.github.meikpiep</groupId>
-  <artifactId>ferriswheel</artifactId>
+  <artifactId>Ferris-Wheel</artifactId>
   <version>1.3.2</version>
   <type>pom</type>
 </dependency>
