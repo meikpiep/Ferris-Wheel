@@ -6,7 +6,7 @@ ext {
     groupId = 'com.github.meikpiep'
     libraryName = 'Ferris-Wheel'
     artifact = 'ferriswheel'
-    libraryVersion = '1.3.2'
+    libraryVersion = '1.3.3-SNAPSHOT'
     libraryDescription = 'Simple android library to present an animated ferris wheel'
 
     siteUrl = 'https://github.com/meikpiep/Ferris-Wheel'
