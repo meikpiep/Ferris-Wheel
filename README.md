@@ -28,18 +28,13 @@ Inspired by the one-color [Planet Coaster loading screen](https://youtu.be/5zHhW
 * Mentioned in [Android Weekly issue 332](http://androidweekly.net/issues/issue-322)
 * Featured in [12 New Android Libraries - Full HD](https://www.youtube.com/watch?v=22k5uak4yYg)
 
-## Sample Project
-
-For more information how to use the library in Kotlin/Java checkout [Sample App](https://github.com/iglaweb/Ferris-Wheel/tree/master/sample/) in repository.
-
-
 ## Quick Setup
 
 ### Include library
 
 **Using Gradle**
 
-FerrisWheelView is distributed using [jcenter](https://bintray.com/iglaweb/maven/Ferris-Wheel).
+FerrisWheelView is distributed using [JitPack](https://jitpack.io/#meikpiep/Ferris-Wheel).
 ``` gradle
 repositories { 
     jcenter()
@@ -53,9 +48,9 @@ dependencies {
 
 ``` maven
 <dependency>
-  <groupId>ru.github.igla</groupId>
+  <groupId>com.github.meikpiep</groupId>
   <artifactId>ferriswheel</artifactId>
-  <version>1.2</version>
+  <version>1.3.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -124,7 +119,5 @@ feel free to file an [issue](https://github.com/iglaweb/Ferris-Wheel/issues)
     See the License for the specific language governing permissions and
     limitations under the License.
 
- [build-status-svg]: https://travis-ci.org/iglaweb/Ferris-Wheel.svg?branch=master
- [build-status-link]: https://travis-ci.org/iglaweb/Ferris-Wheel
  [license-svg]: https://img.shields.io/badge/license-APACHE-lightgrey.svg
- [license-link]: https://github.com/iglaweb/Ferris-Wheel/blob/master/LICENSE
+ [license-link]: https://github.com/meikpiep/Ferris-Wheel/blob/master/LICENSE
