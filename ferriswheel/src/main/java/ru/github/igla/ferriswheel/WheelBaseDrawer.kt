@@ -294,9 +294,9 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     /***
      * https://en.wikipedia.org/wiki/Sine#Relation_to_the_unit_circle
      */
-    private fun getXPos(centerX: Float, R: Double, angle: Double): Double = centerX + R * cos(getRadians(angle))
+    private fun getXPos(centerX: Float, r: Double, angle: Double): Double = centerX + r * cos(getRadians(angle))
 
-    private fun getYPos(centerY: Float, R: Double, angle: Double): Double = centerY + R * sin(getRadians(angle))
+    private fun getYPos(centerY: Float, r: Double, angle: Double): Double = centerY + r * sin(getRadians(angle))
 
     private fun getRadians(angle: Double): Double = Math.toRadians(angle)
 }

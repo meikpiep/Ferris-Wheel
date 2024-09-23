@@ -9,7 +9,7 @@ import android.view.animation.LinearInterpolator
  */
 internal class RotateAnimation(private val viewConfig: WheelViewConfig) {
 
-    interface OnRotateAngleValueChangeListener {
+    fun interface OnRotateAngleValueChangeListener {
         fun onChangeRotateAngle(angle: Float)
     }
 
@@ -45,12 +45,10 @@ internal class RotateAnimation(private val viewConfig: WheelViewConfig) {
     }
 
     private fun createAnimator(listener: OnAngleChangeListener, rotateSpeed: Int, from: Float, to: Float): ObjectAnimator {
-        val property = FloatProperty.createAngleProperty(object : OnAngleChangeListener {
-            override fun onValueChange(angle: Float) {
-                lastChangeAngle = angle
-                listener.onValueChange(angle)
-            }
-        })
+        val property = FloatProperty.createAngleProperty { angle ->
+            lastChangeAngle = angle
+            listener.onValueChange(angle)
+        }
         return ObjectAnimator.ofFloat(listener, property, from, to).apply {
             currentPlayTime = viewConfig.getDurationOffset(lastChangeAngle)
             duration = getDurationFromSpeed(rotateSpeed)

@@ -25,8 +25,8 @@ internal class CabinImage(context: Context, val imageNumber: Int, private val st
     private var cabinLinePaint: Paint = smoothPaint(colorStyle.colorLineStroke).apply {
         style = Paint.Style.FILL
     }
-    private lateinit var cabinPaint: Paint
-    private lateinit var cabinPaintFill: Paint
+    private var cabinPaint: Paint
+    private var cabinPaintFill: Paint
 
     init {
         colorStyle.colorFill.apply {

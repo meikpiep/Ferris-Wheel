@@ -22,11 +22,11 @@ internal const val DEFAULT_ROTATES_SPEED_DEGREE_IN_SEC = 6
 
 class FerrisWheelView : View {
 
-    interface OnClickCenterListener {
+    fun interface OnClickCenterListener {
         fun onClickCenter(e: MotionEvent)
     }
 
-    interface OnClickCabinListener {
+    fun interface OnClickCabinListener {
         fun onClickCabin(cabinNumber: Int, e: MotionEvent)
     }
 
@@ -55,7 +55,7 @@ class FerrisWheelView : View {
         }
     var cabinColors: List<CabinStyle> = cabinColorsDefault
         set(value) {
-            field = if (value.isEmpty()) cabinColorsDefault else value
+            field = value.ifEmpty { cabinColorsDefault }
             config.cabinColors = field
         }
     var baseColor: Int = 0
@@ -79,12 +79,12 @@ class FerrisWheelView : View {
             config.cabinSize = value
         }
 
-    var centerListener: FerrisWheelView.OnClickCenterListener? = null
+    var centerListener: OnClickCenterListener? = null
         set(value) {
             field = value
             config.centerListener = value
         }
-    var cabinListener: FerrisWheelView.OnClickCabinListener? = null
+    var cabinListener: OnClickCabinListener? = null
         set(value) {
             field = value
             config.cabinListener = value
@@ -144,7 +144,7 @@ class FerrisWheelView : View {
     private fun initView(context: Context, attrs: AttributeSet? = null) {
         if (!isInEditMode) {
             if (attrs != null) {
-                context.obtainStyledAttributes(attrs, R.styleable.FerrisWheelView)?.apply {
+                context.obtainStyledAttributes(attrs, R.styleable.FerrisWheelView).apply {
                     isClockwise = getBoolean(R.styleable.FerrisWheelView_fwv_isClockwise, true)
                     isAutoRotate = getBoolean(R.styleable.FerrisWheelView_fwv_isAutoRotate, true)
                     rotateDegreeSpeedInSec = getInt(R.styleable.FerrisWheelView_fwv_rotateSpeed, DEFAULT_ROTATES_SPEED_DEGREE_IN_SEC)

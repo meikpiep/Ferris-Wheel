@@ -18,9 +18,11 @@ internal class WheelDrawable(private val context: Context) :
         override fun invalidateDrawable(who: Drawable) = invalidateSelf()
 
         override fun unscheduleDrawable(who: Drawable, what: Runnable) {
+            // unused
         }
 
         override fun scheduleDrawable(who: Drawable, what: Runnable, time: Long) {
+            // unused
         }
     }
 
@@ -58,6 +60,7 @@ internal class WheelDrawable(private val context: Context) :
         paint.alpha = alpha
     }
 
+    @Deprecated("Deprecated in Java")
     override fun getOpacity() = if (paint.alpha < 255) PixelFormat.TRANSLUCENT else PixelFormat.OPAQUE
 
     override fun setColorFilter(colorFilter: ColorFilter?) {
@@ -65,9 +68,7 @@ internal class WheelDrawable(private val context: Context) :
     }
 
     private fun throwExceptionIfNotBuild() {
-        if (stateController == null) {
-            throw IllegalStateException("View is not build up. Call method build()")
-        }
+        checkNotNull(stateController) { "View is not build up. Call method build()" }
     }
 
     fun startAnimation() {
