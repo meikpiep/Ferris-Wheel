@@ -1,9 +1,13 @@
-apply plugin: 'com.android.library'
-apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'maven-publish'
+import com.github.meikpiep.ferriswheel.Configuration
+
+plugins {
+    "com.android.library"
+    "org.jetbrains.kotlin.android"
+    "maven-publish"
+}
 
 ext {
-    groupId = 'com.github.meikpiep'
+
     libraryName = 'Ferris-Wheel'
     artifact = 'ferriswheel'
     libraryVersion = '1.3.3-SNAPSHOT'
@@ -26,17 +30,17 @@ version = libraryVersion
 android {
     namespace = groupId + '.' + artifact
 
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
+    compileSdkVersion = Configuration.compileSdk
+    buildToolsVersion = Configuration.buildTools
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
+        minSdkVersion = Configuration.minSdk
+        targetSdkVersion = Configuration.targetSdk
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            isMinifyEnabled = false
+            proguardFiles = listOf(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
 
@@ -47,7 +51,7 @@ android {
     }
 
     lintOptions {
-        abortOnError true
+        abortOnError = true
     }
 }
 
@@ -55,9 +59,9 @@ project.afterEvaluate {
     publishing {
         publications {
             libraryProject(MavenPublication) {
-                setGroupId groupId
-                setArtifactId artifact
-                version libraryVersion
+                setGroupId Configuration.groupId
+                setArtifactId Configuration.artifact
+                version Configuration.libraryVersion
                 artifact bundleReleaseAar
             }
         }
@@ -80,5 +84,5 @@ java {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    //implementation("org.jetbrains.kotlin:kotlin-stdlib:${Configuration.kotlin}")
 }
