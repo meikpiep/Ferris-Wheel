@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Unreleased
+----------
+
+* Use Kotlin version 2.0.21 (was 2.0.20)
+* Use Gradle version 8.10.2 (was 8.9)
+* Use Android Gradle Plugin 8.7.2 (was 8.6.1)
+
 Version 1.3.2 *(2014-09-23)*
 ----------------------------
 
