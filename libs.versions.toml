@@ -1,0 +1,14 @@
+[versions]
+
+kotlin = "2.0.21"
+android-gradle-plugin = "8.7.2"
+
+[libraries]
+
+[plugins]
+
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+
+[bundles]
