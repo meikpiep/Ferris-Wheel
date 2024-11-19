@@ -37,7 +37,7 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     private val useCabinAutoSize = config.cabinSize == -1
     private val defaultCabinSize: Int = context.resources.getDimensionPixelSize(R.dimen.fwv_cabin_size)
     var cabinSize = defaultCabinSize
-    var ratioCabinSize: Double = 1.0
+    var ratioCabinSize: Double = 0.25
 
     val centerPoint = PointF()
     private var dirtyDraw = true
@@ -115,15 +115,15 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         val minAvailableHeight = minDiameter + getGroundPadding()
         val parentWidth = rect.width()
         val parentHeight = rect.height()
-        if (parentWidth < minAvailableWidth || parentHeight < minAvailableHeight) {
-            //no space
-            return
-        }
+        //if (parentWidth < minAvailableWidth || parentHeight < minAvailableHeight) {
+        //    //no space
+        //    return
+        //}
         val circleLength = minDiameter * PI
-        if (defaultCabinSize * config.cabinsNumber > circleLength) {
-            //no space
-            return
-        }
+        //if (defaultCabinSize * config.cabinsNumber > circleLength) {
+        //    //no space
+        //    return
+        //}
 
         val centerX = parentWidth / 2.0f
         val centerY = (parentHeight - getGroundPadding().toFloat()) / 2.0f
