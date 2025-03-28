@@ -142,41 +142,43 @@ class FerrisWheelView : View {
     }
 
     private fun initView(context: Context, attrs: AttributeSet? = null) {
-        if (!isInEditMode) {
-            if (attrs != null) {
-                context.obtainStyledAttributes(attrs, R.styleable.FerrisWheelView).apply {
-                    isClockwise = getBoolean(R.styleable.FerrisWheelView_fwv_isClockwise, true)
-                    isAutoRotate = getBoolean(R.styleable.FerrisWheelView_fwv_isAutoRotate, true)
-                    rotateDegreeSpeedInSec = getInt(R.styleable.FerrisWheelView_fwv_rotateSpeed, DEFAULT_ROTATES_SPEED_DEGREE_IN_SEC)
-                    startAngle = getFloat(R.styleable.FerrisWheelView_fwv_startAngle, 0f)
-                    cabinSize = getDimensionPixelSize(R.styleable.FerrisWheelView_fwv_cabinSize, -1)
+        if (!isInEditMode && attrs != null) {
+            context.obtainStyledAttributes(attrs, R.styleable.FerrisWheelView).apply {
+                isClockwise = getBoolean(R.styleable.FerrisWheelView_fwv_isClockwise, true)
+                isAutoRotate = getBoolean(R.styleable.FerrisWheelView_fwv_isAutoRotate, true)
+                rotateDegreeSpeedInSec = getInt(R.styleable.FerrisWheelView_fwv_rotateSpeed, DEFAULT_ROTATES_SPEED_DEGREE_IN_SEC)
+                startAngle = getFloat(R.styleable.FerrisWheelView_fwv_startAngle, 0f)
+                cabinSize = getDimensionPixelSize(R.styleable.FerrisWheelView_fwv_cabinSize, -1)
 
-                    if (hasValue(R.styleable.FerrisWheelView_fwv_cabinFillColor)) {
-                        val cabinColorFill = getColor(R.styleable.FerrisWheelView_fwv_cabinFillColor, 0)
-                        val cabinColorLineStroke = getColor(R.styleable.FerrisWheelView_fwv_cabinLineStrokeColor, cabinLineColorDefault)
-                        cabinColors = listOf(CabinStyle(cabinColorFill, cabinColorLineStroke))
-                    }
-
-                    numberOfCabins = getInt(R.styleable.FerrisWheelView_fwv_cabinsNumber, DEFAULT_CABINS_NUMBER)
-                    baseColor = getColor(R.styleable.FerrisWheelView_fwv_baseStrokeColor, baseColorDefault)
-                    wheelColor = getColor(R.styleable.FerrisWheelView_fwv_wheelStrokeColor, wheelColorDefault)
-                    recycle()
+                if (hasValue(R.styleable.FerrisWheelView_fwv_cabinFillColor)) {
+                    val cabinColorFill = getColor(R.styleable.FerrisWheelView_fwv_cabinFillColor, 0)
+                    val cabinColorLineStroke = getColor(R.styleable.FerrisWheelView_fwv_cabinLineStrokeColor, cabinLineColorDefault)
+                    cabinColors = listOf(CabinStyle(cabinColorFill, cabinColorLineStroke))
                 }
-            } else {
-                baseColor = baseColorDefault
-                wheelColor = wheelColorDefault
-                cabinColors = cabinColorsDefault
+
+                numberOfCabins = getInt(R.styleable.FerrisWheelView_fwv_cabinsNumber, DEFAULT_CABINS_NUMBER)
+                baseColor = getColor(R.styleable.FerrisWheelView_fwv_baseStrokeColor, baseColorDefault)
+                wheelColor = getColor(R.styleable.FerrisWheelView_fwv_wheelStrokeColor, wheelColorDefault)
+                recycle()
             }
+        } else {
+            baseColor = baseColorDefault
+            wheelColor = wheelColorDefault
+            cabinColors = cabinColorsDefault
+        }
+
+        if (!isInEditMode) {
             this.gestureDetector = GestureDetector(context, InteractGestureListener
             { e ->
                 performClickEvent(config, e)
             })
-            wheelDrawable = WheelDrawable(context).apply {
-                callback = this@FerrisWheelView
-            }
-            this@FerrisWheelView.setDrawable(wheelDrawable)
-            wheelDrawable.build(config)
         }
+
+        wheelDrawable = WheelDrawable(context).apply {
+            callback = this@FerrisWheelView
+        }
+        this@FerrisWheelView.setDrawable(wheelDrawable)
+        wheelDrawable.build(config)
     }
 
     @Suppress("DEPRECATION")
@@ -207,7 +209,7 @@ class FerrisWheelView : View {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        if (isAutoRotate) {
+        if (isAutoRotate && !isInEditMode) {
             startAnimation()
         }
     }
