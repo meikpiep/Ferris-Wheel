@@ -3,7 +3,6 @@ package ru.github.igla.ferriswheel
 import android.content.Context
 import android.graphics.*
 import com.github.meikpiep.ferriswheel.R
-import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -111,19 +110,8 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
 
     override fun configure(rect: Rect) {
         val minDiameter = minRadius * 2.0
-        val minAvailableWidth = minDiameter + defaultCabinSize
-        val minAvailableHeight = minDiameter + getGroundPadding()
         val parentWidth = rect.width()
         val parentHeight = rect.height()
-        if (parentWidth < minAvailableWidth || parentHeight < minAvailableHeight) {
-            //no space
-            return
-        }
-        val circleLength = minDiameter * PI
-        if (defaultCabinSize * config.cabinsNumber > circleLength) {
-            //no space
-            return
-        }
 
         val centerX = parentWidth / 2.0f
         val centerY = (parentHeight - getGroundPadding().toFloat()) / 2.0f
