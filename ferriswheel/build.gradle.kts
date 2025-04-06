@@ -60,51 +60,47 @@ android {
     lint {
         abortOnError = true
     }
-}
 
-project.afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                groupId = groupId
-                artifactId = artifact
-                version = libraryVersion
-
-                pom {
-                    licenses {
-                        license {
-                            name = "The Apache Software License, Version 2.0"
-                            url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
-                        }
-                    }
-                    developers {
-                        developer {
-                            id = "meikpiep"
-                            name = "Meik Piepmeyer"
-                            email = "meik.piepmeyer@gmail.com"
-                        }
-                    }
-                    scm {
-                        connection = "scm:git:git://github.com/meikpiep/Ferris-Wheel.git"
-                        url = "https://github.com/meikpiep/Ferris-Wheel"
-                    }
-                }
-            }
-        }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = "11"
     }
 }
 
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(11))
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = groupId
+            artifactId = artifact
+            version = libraryVersion
 
-kotlin {
-    jvmToolchain(11)
-}
+            afterEvaluate {
+                from(components["release"])
+            }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
+            pom {
+                licenses {
+                    license {
+                        name = "The Apache Software License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "meikpiep"
+                        name = "Meik Piepmeyer"
+                        email = "meik.piepmeyer@gmail.com"
+                    }
+                }
+                scm {
+                    connection = "scm:git:git://github.com/meikpiep/Ferris-Wheel.git"
+                    url = "https://github.com/meikpiep/Ferris-Wheel"
+                }
+            }
+        }
     }
 }
 
