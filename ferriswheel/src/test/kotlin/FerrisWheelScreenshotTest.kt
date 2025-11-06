@@ -20,8 +20,8 @@ class FerrisWheelScreenshotTest {
     private val pathPrefix = "src/test/resources/screenshots"
 
     @Config(sdk = [30])
-    @Test fun defaultConfig_600x600() {
-        listOf(75, 150, 200, 400, 600, 800, 1000, 1500).forEach { sizeInDp ->
+    @Test fun sizing() {
+        listOf(75, 150, 200, 400, 500, 600, 800, 1000, 1500).forEach { sizeInDp ->
             val activityScenario =
                 RobolectricActivityScenarioConfigurator.ForView()
                     .setDeviceScreen(DeviceScreen(sizeInDp, sizeInDp))
