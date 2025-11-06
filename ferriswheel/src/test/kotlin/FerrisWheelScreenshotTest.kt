@@ -20,6 +20,30 @@ class FerrisWheelScreenshotTest {
     private val pathPrefix = "src/test/resources/screenshots"
 
     @Config(sdk = [30])
+    @Test fun defaultConfig_600x600() {
+        listOf(75, 150, 200, 400, 600, 800, 1000, 1500).forEach { sizeInDp ->
+            val activityScenario =
+                RobolectricActivityScenarioConfigurator.ForView()
+                    .setDeviceScreen(DeviceScreen(sizeInDp, sizeInDp))
+                    .setUiMode(UiMode.NIGHT)
+                    .setFontSize(FontSize.NORMAL)
+                    .launchConfiguredActivity(TRANSPARENT)
+
+            val activity = activityScenario.waitForActivity()
+
+            val viewHolder = waitForView {
+                FerrisWheelView(
+                    activity
+                )
+            }
+
+            viewHolder.captureRoboImage("$pathPrefix/size_dp_${sizeInDp}.png")
+
+            activityScenario.close()
+        }
+    }
+
+    @Config(sdk = [30])
     @Test
     fun defaultConfig() {
         val activityScenario =
@@ -52,7 +76,6 @@ class FerrisWheelScreenshotTest {
                 .setLocale("en_XA")
                 .setUiMode(UiMode.NIGHT)
                 .setFontSize(FontSize.NORMAL)
-                .setDisplaySize(DisplaySize.NORMAL)
                 .launchConfiguredActivity(TRANSPARENT)
 
         val activity = activityScenario.waitForActivity()
