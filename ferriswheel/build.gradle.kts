@@ -77,9 +77,9 @@ publishing {
             artifactId = artifact
             version = libraryVersion
 
-            afterEvaluate {
-                from(components["release"])
-            }
+            //afterEvaluate {
+            //    from(components["release"])
+            //}
 
             pom {
                 licenses {
