@@ -16,22 +16,32 @@ private const val PILL_ANGLE_TO = 70.0
 
 internal class WheelBaseDrawer(private val context: Context, private val config: WheelViewConfig) : IWheelDrawer {
 
-    private val dp6 = context.dpF(6f)
-    private val dp10 = context.dp(10f)
-    private val dp14 = context.dpF(14f)
-    private val dp16 = context.dpF(16f)
-    private val dp56 = context.dpF(56f)
-    private val dp28 = context.dpF(28f)
-    private val dp32 = context.dpF(32f)
-    private val dp34 = context.dpF(34f)
+    private val outerPadding = context.dpF(6f)
 
-    private val minRadius: Double = context.dp(100f)
+    private val dp10 = context.dp(10f)
+    private val dp16 = context.dpF(16f)
+    private val firstCircleFromStarRatio = 28.0f / 180.5f
+    private val secondCircleFromStarRatio = 34.0f / 180.5f
+
+    private val innerCircleRadiusRatio = 56.0f / 180.5f
+    private val innerCircleStrokeRatio = 6.0f / 180.5f
+    private val circleOuterStrokeRatio = 6.0f / 180.5f
+    private val circleInnerStrokePaintStrokeRatio = 4.0f / 180.5f
+    private val pillLineStrokeRatio = 8.0f / 180.5f
+    private val circleInnerPaintStrokeRadiusRatio = 16.0f / 180.5f
+    private val circleInnerPaintFillRadiusRatio = 14.0f / 180.5f
+    private val starPathRadiusRatio = 32.0f / 180.5f
+    private val groundPlateLengthRatio = 56.0f / 180.5f
+    private val groundPlateHeightRatio = 16.0f / 180.5f
+    private val groundPlateRoundedCornerRatio = 6.0f / 180.5f
+    private val patternPaintStrokeRatio = 2.0f / 180.5f
+    private val trianglePatternLengthRatio = 16.0f / 180.5f
+
+
     private val radiusWheelForCabin: Double = context.dp(150f) //for 42dp
 
     var radius = 0.0
-        set(value) {
-            field = if (value < minRadius) minRadius else value
-        }
+    var radiusInDp = 0.0f
 
     private val useCabinAutoSize = config.cabinSize == -1
     private val defaultCabinSize: Int = context.resources.getDimensionPixelSize(R.dimen.fwv_cabin_size)
@@ -48,27 +58,22 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     }
 
     private val patternPaint = smoothPaint(config.wheelColor).apply {
-        strokeWidth = context.dpF(2f)
         style = Paint.Style.STROKE
     }
 
     private val innerCirclePaint = smoothPaint(config.wheelColor).apply {
-        strokeWidth = dp6
         style = Paint.Style.STROKE
     }
 
     private val pillLinePaint = smoothPaint(config.baseColor).apply {
-        strokeWidth = context.dpF(8f)
         style = Paint.Style.STROKE
     }
 
     private val circleOuterPaint = smoothPaint(config.wheelColor).apply {
-        strokeWidth = dp6
         style = Paint.Style.STROKE
     }
 
     private val circleInnerPaintStroke = smoothPaint(config.coreStyle.colorCircleStroke).apply {
-        strokeWidth = context.dpF(4f)
         style = Paint.Style.STROKE
     }
     private val circleInnerPaintFill = smoothPaint(config.coreStyle.colorCircleFill).apply {
@@ -85,7 +90,6 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     private val pillGroundBlock2 = PointF()
 
     private val roundRect = RectF()
-
 
     private val patternStep = 5
     private val patternPoints = 360 / (patternStep * 2)
@@ -106,10 +110,9 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
 
     private fun getGroundPadding(): Double = defaultCabinSize + CABIN_TILT_MAX + dp10 + dp16
 
-    private fun getPaddingOutside(): Double = dp6.toDouble()
+    private fun getPaddingOutside(): Double = outerPadding.toDouble()
 
     override fun configure(rect: Rect) {
-        val minDiameter = minRadius * 2.0
         val parentWidth = rect.width()
         val parentHeight = rect.height()
 
@@ -118,6 +121,13 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         this.centerPoint.set(centerX, centerY)
         val minSize = minOf(centerX - defaultCabinSize / 2f, centerY)
         this.radius = minSize - getPaddingOutside()
+        this.radiusInDp = radius.toFloat()
+
+        innerCirclePaint.strokeWidth = radiusInDp * innerCircleStrokeRatio
+        circleOuterPaint.strokeWidth = radiusInDp * circleOuterStrokeRatio
+        circleInnerPaintStroke.strokeWidth = radiusInDp * circleInnerStrokePaintStrokeRatio
+        pillLinePaint.strokeWidth = radiusInDp * pillLineStrokeRatio
+        patternPaint.strokeWidth = radiusInDp * patternPaintStrokeRatio
 
         if (useCabinAutoSize) {
             this.ratioCabinSize = this.radius / radiusWheelForCabin
@@ -134,8 +144,8 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     override fun onPostDraw(canvas: Canvas) {
         canvas.apply {
             drawBase(this)
-            drawCircle(centerPoint, dp16, circleInnerPaintStroke)
-            drawCircle(centerPoint, dp14, circleInnerPaintFill)
+            drawCircle(centerPoint, radiusInDp * circleInnerPaintStrokeRadiusRatio, circleInnerPaintStroke)
+            drawCircle(centerPoint, radiusInDp * circleInnerPaintFillRadiusRatio, circleInnerPaintFill)
             if (config.coreStyle.starIcon != null) {
                 drawPath(pathStar, paintStar)
             }
@@ -155,10 +165,11 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
             save()
             rotate(rotateAngle, centerPoint.x, centerPoint.y)
 
-            drawCircle(centerPoint, dp56, innerCirclePaint)
+            //this.drawText((radiusInDp * innerCircleRatio).toString(), centerPoint.x + 100, centerPoint.y, patternPaint)
+            drawCircle(centerPoint, radiusInDp * innerCircleRadiusRatio, innerCirclePaint)
 
-            drawCircle(centerPoint, dp28, patternPaint)
-            drawCircle(centerPoint, dp34, patternPaint)
+            drawCircle(centerPoint, radiusInDp * firstCircleFromStarRatio, patternPaint)
+            drawCircle(centerPoint, radiusInDp * secondCircleFromStarRatio, patternPaint)
 
             drawCircle(centerPoint, radiusF, circleOuterPaint)
 
@@ -180,12 +191,15 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         var n = 0
         var i = 0
         while (i <= patternPoints) {
+            // first half of outer triangles
             setLineAtIndex(linePoints, n, patternPointsOut[i], patternPointsIn[i])
             n += 4
             if (i > 0) {
+                // second half of outer triangles
                 setLineAtIndex(linePoints, n, patternPointsIn[i], patternPointsOut[i - 1])
                 n += 4
             }
+            // draw crossings
             setLineAtIndex(linePoints, n, centerPoint, patternPointsIn[i])
             n += 4
             i++
@@ -198,29 +212,29 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
             drawLine(pillRightStart2, pillRightEnd2, pillLinePaint)
             drawRoundRect(
                     roundRect,
-                    dp6,
-                    dp6,
+                radiusInDp * groundPlateRoundedCornerRatio,
+                radiusInDp * groundPlateRoundedCornerRatio,
                     baseGroundPaint)
         }
     }
 
     private fun calcNewPosition(centerPoint: PointF, radius: Float) {
 
-        setPointPos(pillLeftStart1, centerPoint, PILL_ANGLE_TO, dp16.toDouble())
-        setPointPos(pillRightStart2, centerPoint, PILL_ANGLE_FROM, dp16.toDouble())
+        setPointPos(pillLeftStart1, centerPoint, PILL_ANGLE_TO, (radiusInDp * groundPlateHeightRatio).toDouble())
+        setPointPos(pillRightStart2, centerPoint, PILL_ANGLE_FROM, (radiusInDp * groundPlateHeightRatio).toDouble())
 
         val groundPoint = radius + getGroundPadding()
         setPointPos(pillLeftEnd1, centerPoint, PILL_ANGLE_TO, groundPoint)
         setPointPos(pillRightEnd2, centerPoint, PILL_ANGLE_FROM, groundPoint)
 
-        setPointPos(pillGroundBlock1, centerPoint, PILL_ANGLE_TO, groundPoint - dp16)
-        setPointPos(pillGroundBlock2, centerPoint, PILL_ANGLE_FROM, groundPoint - dp16)
+        setPointPos(pillGroundBlock1, centerPoint, PILL_ANGLE_TO, groundPoint - radiusInDp * groundPlateHeightRatio)
+        setPointPos(pillGroundBlock2, centerPoint, PILL_ANGLE_FROM, groundPoint - radiusInDp * groundPlateHeightRatio)
 
         roundRect.set(
-                pillRightEnd2.x - dp28,
-                pillRightEnd2.y - dp6,
-                pillLeftEnd1.x + dp28,
-                pillLeftEnd1.y - dp6 + dp16
+                pillRightEnd2.x - radiusInDp * groundPlateLengthRatio/2,
+                pillRightEnd2.y - outerPadding,
+                pillLeftEnd1.x + radiusInDp * groundPlateLengthRatio/2,
+                pillLeftEnd1.y - outerPadding + radiusInDp * groundPlateHeightRatio
         )
 
         var angle1 = patternStep.toDouble()
@@ -235,7 +249,7 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
             angle1 += stepBy
             angle2 += stepBy
         }
-        measureStarPath(centerPoint, dp32)
+        measureStarPath(centerPoint, radiusInDp * starPathRadiusRatio)
 
         fillArrayWithData()
     }
@@ -263,7 +277,7 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     }
 
     private fun getPatternRadiusOuter(radius: Float): Double = radius - circleOuterPaint.strokeWidth / 2.0
-    private fun getPatternRadiusInner(radius: Float): Double = getPatternRadiusOuter(radius) - dp16
+    private fun getPatternRadiusInner(radius: Float): Double = getPatternRadiusOuter(radius) - radiusInDp * trianglePatternLengthRatio
 
 
     private fun Canvas.drawLine(p1: PointF, p2: PointF, paint: Paint) {
