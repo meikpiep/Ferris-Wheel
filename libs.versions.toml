@@ -29,6 +29,7 @@ roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.1
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-junit = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
 junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version = "6.0.1" }
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "6.0.1" }
 
 [plugins]
 
@@ -42,5 +43,5 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 logging = ["logging-kotlin", "logging-slf"]
 kotest = ["kotest-runner", "kotest-assertions", "kotest-parametrizedtests", "kotest-koin"]
 androidx-test = ["androidx-test-junit-ktx", "androidx-test-rules", "androidx-test-runner"]
-screenshotTests = ["androiduitestingutils-utils", "androiduitestingutils-robolectric", "roboelectric", "roborazzi", "roborazzi-junit", "junit-vintage-engine"]
+screenshotTests = ["androiduitestingutils-utils", "androiduitestingutils-robolectric", "roboelectric", "roborazzi", "roborazzi-junit", "junit-vintage-engine", "junit-platform-launcher"]
 
