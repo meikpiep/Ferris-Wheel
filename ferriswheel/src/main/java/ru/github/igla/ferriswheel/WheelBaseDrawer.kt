@@ -35,7 +35,7 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     private val trianglePatternLengthRatio = 16.0f / 180.5f
 
     var radius = 0.0
-    var radiusInDp = 0.0f
+    var radiusF = 0.0f
 
     private val useCabinAutoSize = config.cabinSize == -1
     private val defaultCabinSize: Int = context.resources.getDimensionPixelSize(R.dimen.fwv_cabin_size)
@@ -125,13 +125,13 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         this.centerPoint.set(centerX, centerY)
         val minSize = minOf(centerX - cabinSize / 2f, centerY)
         this.radius = minSize - getPaddingOutside()
-        this.radiusInDp = radius.toFloat()
+        this.radiusF = radius.toFloat()
 
-        innerCirclePaint.strokeWidth = radiusInDp * innerCircleStrokeRatio
-        circleOuterPaint.strokeWidth = radiusInDp * circleOuterStrokeRatio
-        circleInnerPaintStroke.strokeWidth = radiusInDp * circleInnerStrokePaintStrokeRatio
-        pillLinePaint.strokeWidth = radiusInDp * pillLineStrokeRatio
-        patternPaint.strokeWidth = radiusInDp * patternPaintStrokeRatio
+        innerCirclePaint.strokeWidth = radiusF * innerCircleStrokeRatio
+        circleOuterPaint.strokeWidth = radiusF * circleOuterStrokeRatio
+        circleInnerPaintStroke.strokeWidth = radiusF * circleInnerStrokePaintStrokeRatio
+        pillLinePaint.strokeWidth = radiusF * pillLineStrokeRatio
+        patternPaint.strokeWidth = radiusF * patternPaintStrokeRatio
 
 
         dirtyDraw = true
@@ -144,8 +144,8 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     override fun onPostDraw(canvas: Canvas) {
         canvas.apply {
             drawBase(this)
-            drawCircle(centerPoint, radiusInDp * circleInnerPaintStrokeRadiusRatio, circleInnerPaintStroke)
-            drawCircle(centerPoint, radiusInDp * circleInnerPaintFillRadiusRatio, circleInnerPaintFill)
+            drawCircle(centerPoint, radiusF * circleInnerPaintStrokeRadiusRatio, circleInnerPaintStroke)
+            drawCircle(centerPoint, radiusF * circleInnerPaintFillRadiusRatio, circleInnerPaintFill)
             if (config.coreStyle.starIcon != null) {
                 drawPath(pathStar, paintStar)
             }
@@ -165,11 +165,10 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
             save()
             rotate(rotateAngle, centerPoint.x, centerPoint.y)
 
-            //this.drawText((radiusInDp * innerCircleRatio).toString(), centerPoint.x + 100, centerPoint.y, patternPaint)
-            drawCircle(centerPoint, radiusInDp * innerCircleRadiusRatio, innerCirclePaint)
+            drawCircle(centerPoint, radiusF * innerCircleRadiusRatio, innerCirclePaint)
 
-            drawCircle(centerPoint, radiusInDp * firstCircleFromStarRatio, patternPaint)
-            drawCircle(centerPoint, radiusInDp * secondCircleFromStarRatio, patternPaint)
+            drawCircle(centerPoint, radiusF * firstCircleFromStarRatio, patternPaint)
+            drawCircle(centerPoint, radiusF * secondCircleFromStarRatio, patternPaint)
 
             drawCircle(centerPoint, radiusF, circleOuterPaint)
 
@@ -212,29 +211,29 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
             drawLine(pillRightStart2, pillRightEnd2, pillLinePaint)
             drawRoundRect(
                     roundRect,
-                radiusInDp * groundPlateRoundedCornerRatio,
-                radiusInDp * groundPlateRoundedCornerRatio,
+                radiusF * groundPlateRoundedCornerRatio,
+                radiusF * groundPlateRoundedCornerRatio,
                     baseGroundPaint)
         }
     }
 
     private fun calcNewPosition(centerPoint: PointF, radius: Float) {
 
-        setPointPos(pillLeftStart1, centerPoint, PILL_ANGLE_TO, (radiusInDp * groundPlateHeightRatio).toDouble())
-        setPointPos(pillRightStart2, centerPoint, PILL_ANGLE_FROM, (radiusInDp * groundPlateHeightRatio).toDouble())
+        setPointPos(pillLeftStart1, centerPoint, PILL_ANGLE_TO, (radiusF * groundPlateHeightRatio).toDouble())
+        setPointPos(pillRightStart2, centerPoint, PILL_ANGLE_FROM, (radiusF * groundPlateHeightRatio).toDouble())
 
         val groundPoint = radius + groundPadding
         setPointPos(pillLeftEnd1, centerPoint, PILL_ANGLE_TO, groundPoint)
         setPointPos(pillRightEnd2, centerPoint, PILL_ANGLE_FROM, groundPoint)
 
-        setPointPos(pillGroundBlock1, centerPoint, PILL_ANGLE_TO, groundPoint - radiusInDp * groundPlateHeightRatio)
-        setPointPos(pillGroundBlock2, centerPoint, PILL_ANGLE_FROM, groundPoint - radiusInDp * groundPlateHeightRatio)
+        setPointPos(pillGroundBlock1, centerPoint, PILL_ANGLE_TO, groundPoint - radiusF * groundPlateHeightRatio)
+        setPointPos(pillGroundBlock2, centerPoint, PILL_ANGLE_FROM, groundPoint - radiusF * groundPlateHeightRatio)
 
         roundRect.set(
-                pillRightEnd2.x - radiusInDp * groundPlateLengthRatio/2,
+                pillRightEnd2.x - radiusF * groundPlateLengthRatio/2,
                 pillRightEnd2.y - outerPadding,
-                pillLeftEnd1.x + radiusInDp * groundPlateLengthRatio/2,
-                pillLeftEnd1.y - outerPadding + radiusInDp * groundPlateHeightRatio
+                pillLeftEnd1.x + radiusF * groundPlateLengthRatio/2,
+                pillLeftEnd1.y - outerPadding + radiusF * groundPlateHeightRatio
         )
 
         var angle1 = patternStep.toDouble()
@@ -249,7 +248,7 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
             angle1 += stepBy
             angle2 += stepBy
         }
-        measureStarPath(centerPoint, radiusInDp * starPathRadiusRatio)
+        measureStarPath(centerPoint, radiusF * starPathRadiusRatio)
 
         fillArrayWithData()
     }
@@ -277,7 +276,7 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     }
 
     private fun getPatternRadiusOuter(radius: Float): Double = radius - circleOuterPaint.strokeWidth / 2.0
-    private fun getPatternRadiusInner(radius: Float): Double = getPatternRadiusOuter(radius) - radiusInDp * trianglePatternLengthRatio
+    private fun getPatternRadiusInner(radius: Float): Double = getPatternRadiusOuter(radius) - radiusF * trianglePatternLengthRatio
 
 
     private fun Canvas.drawLine(p1: PointF, p2: PointF, paint: Paint) {
