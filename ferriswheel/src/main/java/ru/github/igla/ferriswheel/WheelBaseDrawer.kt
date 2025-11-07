@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.*
 import com.github.meikpiep.ferriswheel.R
 import kotlin.math.cos
+import kotlin.math.min
 import kotlin.math.sin
-
 
 /**
  * Created by igor-lashkov on 11/01/2018.
@@ -18,11 +18,8 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
 
     private val outerPadding = context.dpF(6f)
 
-    private val dp10 = context.dp(10f)
-    private val dp16 = context.dpF(16f)
     private val firstCircleFromStarRatio = 28.0f / 180.5f
     private val secondCircleFromStarRatio = 34.0f / 180.5f
-
     private val innerCircleRadiusRatio = 56.0f / 180.5f
     private val innerCircleStrokeRatio = 6.0f / 180.5f
     private val circleOuterStrokeRatio = 6.0f / 180.5f
@@ -36,9 +33,6 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     private val groundPlateRoundedCornerRatio = 6.0f / 180.5f
     private val patternPaintStrokeRatio = 2.0f / 180.5f
     private val trianglePatternLengthRatio = 16.0f / 180.5f
-
-
-    private val radiusWheelForCabin: Double = context.dp(150f) //for 42dp
 
     var radius = 0.0
     var radiusInDp = 0.0f
@@ -108,7 +102,7 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     }
     private val pathStar by lazyNonSafe { Path() }
 
-    private fun getGroundPadding(): Double = defaultCabinSize + CABIN_TILT_MAX + dp10 + dp16
+    private var groundPadding: Double = 0.0
 
     private fun getPaddingOutside(): Double = outerPadding.toDouble()
 
@@ -116,10 +110,20 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         val parentWidth = rect.width()
         val parentHeight = rect.height()
 
+        val minSizeWithoutCabin = min(parentWidth, parentHeight) / 1.2
+
+        if (useCabinAutoSize) {
+            this.ratioCabinSize = minSizeWithoutCabin / 300 /
+                    context.resources.displayMetrics.density
+            this.cabinSize = (defaultCabinSize * ratioCabinSize).toInt()
+        }
+
+        groundPadding = cabinSize + CABIN_TILT_MAX + minSizeWithoutCabin * groundPlateHeightRatio
+
         val centerX = parentWidth / 2.0f
-        val centerY = (parentHeight - getGroundPadding().toFloat()) / 2.0f
+        val centerY = (parentHeight - groundPadding.toFloat()) / 2.0f
         this.centerPoint.set(centerX, centerY)
-        val minSize = minOf(centerX - defaultCabinSize / 2f, centerY)
+        val minSize = minOf(centerX - cabinSize / 2f, centerY)
         this.radius = minSize - getPaddingOutside()
         this.radiusInDp = radius.toFloat()
 
@@ -129,10 +133,6 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         pillLinePaint.strokeWidth = radiusInDp * pillLineStrokeRatio
         patternPaint.strokeWidth = radiusInDp * patternPaintStrokeRatio
 
-        if (useCabinAutoSize) {
-            this.ratioCabinSize = this.radius / radiusWheelForCabin
-            this.cabinSize = (defaultCabinSize * ratioCabinSize).toInt()
-        }
 
         dirtyDraw = true
     }
@@ -223,7 +223,7 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         setPointPos(pillLeftStart1, centerPoint, PILL_ANGLE_TO, (radiusInDp * groundPlateHeightRatio).toDouble())
         setPointPos(pillRightStart2, centerPoint, PILL_ANGLE_FROM, (radiusInDp * groundPlateHeightRatio).toDouble())
 
-        val groundPoint = radius + getGroundPadding()
+        val groundPoint = radius + groundPadding
         setPointPos(pillLeftEnd1, centerPoint, PILL_ANGLE_TO, groundPoint)
         setPointPos(pillRightEnd2, centerPoint, PILL_ANGLE_FROM, groundPoint)
 
