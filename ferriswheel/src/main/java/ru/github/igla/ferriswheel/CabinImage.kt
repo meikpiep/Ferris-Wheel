@@ -31,7 +31,6 @@ internal class CabinImage(context: Context, val imageNumber: Int, private val st
     init {
         colorStyle.colorFill.apply {
             cabinPaint = smoothPaint(this).apply {
-                strokeWidth = cabinStrokeWidth
                 style = Paint.Style.STROKE
             }
             cabinPaintFill = smoothPaint(this).apply {
@@ -50,6 +49,10 @@ internal class CabinImage(context: Context, val imageNumber: Int, private val st
             val cabinCornerRadiusScale = cabinCornerRadius * scale
             val cabinStrokeWidthScale = cabinStrokeWidth * scale
 
+            if (cabinPaint.strokeWidth != cabinStrokeWidthScale) {
+                cabinPaint.strokeWidth = cabinStrokeWidthScale
+            }
+
             val angle = if (imageNumber % 2 == 0) tiltAngle else -tiltAngle
             rotate(angle, position.x, position.y)
 
@@ -59,9 +62,14 @@ internal class CabinImage(context: Context, val imageNumber: Int, private val st
             val rightBorder = position.x + halfSize
             val bottomBorder = position.y + size
 
+            val blackLineTop = bottomBorder - (bottomLineOffset + cabinLineHeight) * scale
+            val blackLineBottom = bottomBorder - bottomLineOffset * scale
+
             val cabinStrokeHalf = cabinStrokeWidthScale / 2f
             val cabinTop = topBorder + cabinStrokeHalf
             val cabinBottom = bottomBorder - cabinStrokeHalf
+
+            // draw cabin hull
             dstRect.set(
                     leftBorder + cabinStrokeHalf,
                     cabinTop,
@@ -69,6 +77,7 @@ internal class CabinImage(context: Context, val imageNumber: Int, private val st
                     cabinBottom)
             drawRoundRect(dstRect, cabinCornerRadiusScale, cabinCornerRadiusScale, cabinPaint) //cabin
 
+            // draw cabins top connection to ferris wheel
             val centerArc = leftBorder + halfSize
             dstRect.set(centerArc - arcRadiusScale * 0.8f,
                     cabinTop - arcRadiusScale,
@@ -76,6 +85,7 @@ internal class CabinImage(context: Context, val imageNumber: Int, private val st
                     topBorder + arcRadiusScale)
             drawArc(dstRect, 180f, 180f, true, cabinPaintFill) //top arc
 
+            // draw bottom part of cabin
             dstRect.set(
                     leftBorder,
                     cabinTop + cabinWindowHeightScale,
@@ -83,8 +93,7 @@ internal class CabinImage(context: Context, val imageNumber: Int, private val st
                     cabinBottom)
             drawBottomRoundRect(canvas, dstRect, cabinPaintFill, cabinCornerRadiusScale) //cabin fill
 
-            val blackLineTop = bottomBorder - (bottomLineOffset + cabinLineHeight) * scale
-            val blackLineBottom = bottomBorder - bottomLineOffset * scale
+            // draw upper part of bottom cabin, black by default
             drawRect(
                     leftBorder,
                     blackLineTop,
