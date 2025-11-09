@@ -4,11 +4,24 @@ Change Log
 Unreleased
 ----------
 
-* Use Kotlin version 2.0.21 (was 2.0.20)
-* Use Gradle version 8.10.2 (was 8.9)
-* Use Android Gradle Plugin 8.7.2 (was 8.6.1)
+Version 2.0.0 *(2025-11-09)*
+----------------------------
 
-Version 1.3.2 *(2014-09-23)*
+Changed implementation of scaling of the ferris wheel, still ongoing.
+This version will try to support broad variants in terms of sizes:
+
+* Relevant enhancements on large sizes like 600 dp x 600 dp and above.
+* Small sizes like 200 dp x 200 dp are supported and will draw a recognisable ferris wheel. Previous version failed with these sizes.
+
+There is still room for enhancements, one to mention: Huge sizes are a bit unelegant.
+
+May include regressions as not every variant got tested, just the ones relevant for app [Gauguin](https://github.com/meikpiep/gauguin).
+
+* Use Kotlin version 2.2.21 (was 2.0.20)
+* Use Gradle version 9.2.0 (was 8.9)
+* Use Android Gradle Plugin 8.11.1 (was 8.6.1)
+* Upgrade all other dependencies
+
 Version 1.3.2 *(2024-09-23)*
 ----------------------------
 
