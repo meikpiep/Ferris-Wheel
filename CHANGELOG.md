@@ -11,9 +11,9 @@ Changed implementation of scaling of the ferris wheel, still ongoing.
 This version will try to support broad variants in terms of sizes:
 
 * Relevant enhancements on large sizes like 600 dp x 600 dp and above.
-* Small sizes like 200 dp x 200 dp are supported and will draw a recognisable ferris wheel. Previous version failed with these sizes.
+* Small sizes like 200 dp x 200 dp are supported and will draw a recognizable ferris wheel. Previous version failed with these sizes.
 
-There is still room for enhancements, one to mention: Huge sizes are a bit unelegant.
+There is still room for enhancements, one to mention: Huge sizes are a bit inelegant.
 
 May include regressions as not every variant got tested, just the ones relevant for app [Gauguin](https://github.com/meikpiep/gauguin).
 
