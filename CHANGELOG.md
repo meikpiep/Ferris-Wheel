@@ -9,16 +9,17 @@ Unreleased
 * Use Android Gradle Plugin 8.7.2 (was 8.6.1)
 
 Version 1.3.2 *(2014-09-23)*
+Version 1.3.2 *(2024-09-23)*
 ----------------------------
 
 Change group id from 'org.piepmeyer' to 'com.github.meikpiep' to comply with JitPack.
 
-Version 1.3.1 *(2014-09-21)*
+Version 1.3.1 *(2024-09-21)*
 ----------------------------
 
 Adds build metadata for JitPack to fix its build.
 
-Version 1.3.0 *(2014-09-21)*
+Version 1.3.0 *(2024-09-21)*
 ----------------------------
 
 First release of fork with group and artifact id 'org.piepmeyer.ferriswheel'.
