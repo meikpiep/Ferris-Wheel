@@ -5,5 +5,5 @@ object Configuration {
     const val buildTools = "35.0.0"
     const val minSdk = 15
     const val targetSdk = 35
-    const val kotlin = "2.0.21"
+    const val kotlin = "2.2.21"
 }
