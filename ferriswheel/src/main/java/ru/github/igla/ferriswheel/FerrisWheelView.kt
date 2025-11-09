@@ -224,18 +224,22 @@ class FerrisWheelView : View {
     }
 
     fun startAnimation() {
-        wheelDrawable.apply {
-            build(config)
-            startAnimation()
+        if (!isInEditMode) {
+            wheelDrawable.apply {
+                build(config)
+                startAnimation()
+            }
         }
     }
 
     fun stopAnimation() = wheelDrawable.stopAnimation()
 
     fun resumeAnimation() {
-        wheelDrawable.apply {
-            build(config)
-            resumeAnimation()
+        if (!isInEditMode) {
+            wheelDrawable.apply {
+                build(config)
+                resumeAnimation()
+            }
         }
     }
 
