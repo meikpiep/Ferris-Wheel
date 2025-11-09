@@ -7,11 +7,12 @@ Unreleased
 Version 2.0.0 *(2025-11-09)*
 ----------------------------
 
-Changed implementation of scaling of the ferris wheel, still ongoing.
+Changed implementation of scaling of the Ferris wheel, still ongoing.
 This version will try to support broad variants in terms of sizes:
 
 * Relevant enhancements on large sizes like 600 dp x 600 dp and above.
-* Small sizes like 200 dp x 200 dp are supported and will draw a recognizable ferris wheel. Previous version failed with these sizes.
+* Small sizes like 200 dp x 200 dp are supported and will draw a recognizable Ferris wheel. Previous
+  versions failed using these sizes.
 
 There is still room for enhancements, one to mention: Huge sizes are a bit inelegant.
 
