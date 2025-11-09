@@ -21,3 +21,4 @@ plugins {
 rootProject.name = "ferriswheel"
 
 include(":ferriswheel")
+include(":ferriswheel-screenshot-tests")

@@ -4,7 +4,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("maven-publish")
-    alias(libs.plugins.roborazzi)
+    //alias(libs.plugins.roborazzi)
 }
 
 val groupId = "com.github.meikpiep"
@@ -36,24 +36,16 @@ android {
 
     flavorDimensions += "version"
 
-    productFlavors {
+    /*productFlavors {
         create("development") {
             dimension = "version"
             minSdk = 23
         }
-    }
+    }*/
 
     publishing {
         singleVariant("release") {
             withSourcesJar()
-        }
-    }
-
-    testOptions {
-        unitTests.isIncludeAndroidResources = true
-
-        unitTests.all {
-            it.useJUnitPlatform()
         }
     }
 
@@ -77,9 +69,9 @@ publishing {
             artifactId = artifact
             version = libraryVersion
 
-            //afterEvaluate {
-            //    from(components["release"])
-            //}
+            afterEvaluate {
+                from(components["release"])
+            }
 
             pom {
                 licenses {
@@ -102,8 +94,4 @@ publishing {
             }
         }
     }
-}
-
-dependencies {
-    testImplementation(libs.bundles.screenshotTests)
 }
