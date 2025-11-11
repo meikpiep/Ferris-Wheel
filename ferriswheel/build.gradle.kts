@@ -10,7 +10,7 @@ plugins {
 val groupId = "com.github.meikpiep"
 val libraryName = "ferriswheel"
 val artifact = "ferriswheel"
-val libraryVersion = "2.0.0"
+val libraryVersion = "2.0.1-SNAPSHOT"
 val libraryDescription = "Simple android library to present an animated ferris wheel"
 
 group = groupId
