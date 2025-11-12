@@ -120,6 +120,7 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
 
         largeSizeFactor = when {
             minSizeThroughDensity < 287 -> 1.0f
+            minSizeThroughDensity > 800 -> 3.0f
             minSizeThroughDensity > 446 -> 2.0f
             else -> 1.0f + ((minSizeThroughDensity - 287f) / (446f-287f))
         }
