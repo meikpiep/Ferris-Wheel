@@ -3,7 +3,9 @@ package ru.github.igla.ferriswheel
 import android.content.Context
 import android.graphics.*
 import com.github.meikpiep.ferriswheel.R
+import kotlin.div
 import kotlin.math.cos
+import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sin
 
@@ -36,6 +38,8 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
 
     var radius = 0.0
     var radiusF = 0.0f
+
+    var largeSizeFactor = 1.0f
 
     private val useCabinAutoSize = config.cabinSize == -1
     private val defaultCabinSize: Int = context.resources.getDimensionPixelSize(R.dimen.fwv_cabin_size)
@@ -112,9 +116,20 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
 
         val minSizeWithoutCabin = min(parentWidth, parentHeight) / 1.2
 
+        val minSizeThroughDensity = minSizeWithoutCabin.toFloat() / context.resources.displayMetrics.density
+
+        largeSizeFactor = when {
+            minSizeThroughDensity < 287 -> 1.0f
+            minSizeThroughDensity > 446 -> 2.0f
+            else -> 1.0f + ((minSizeThroughDensity - 287f) / (446f-287f))
+        }
+
+        println("$minSizeWithoutCabin - $minSizeThroughDensity - $largeSizeFactor")
+        println("${context.resources.displayMetrics.density}")
+
         if (useCabinAutoSize) {
-            this.ratioCabinSize = minSizeWithoutCabin / 300 /
-                    context.resources.displayMetrics.density
+            this.ratioCabinSize = minSizeWithoutCabin / 300.0 /
+                    context.resources.displayMetrics.density / largeSizeFactor
             this.cabinSize = (defaultCabinSize * ratioCabinSize).toInt()
         }
 
@@ -127,14 +142,21 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         this.radius = minSize - getPaddingOutside()
         this.radiusF = radius.toFloat()
 
-        innerCirclePaint.strokeWidth = radiusF * innerCircleStrokeRatio
-        circleOuterPaint.strokeWidth = radiusF * circleOuterStrokeRatio
+        innerCirclePaint.strokeWidth = radiusF * innerCircleStrokeRatio / largeSizeFactor
+        circleOuterPaint.strokeWidth = radiusF * circleOuterStrokeRatio / largeSizeFactor
         circleInnerPaintStroke.strokeWidth = radiusF * circleInnerStrokePaintStrokeRatio
-        pillLinePaint.strokeWidth = radiusF * pillLineStrokeRatio
-        patternPaint.strokeWidth = radiusF * patternPaintStrokeRatio
-
+        pillLinePaint.strokeWidth = radiusF * pillLineStrokeRatio / largeSizeFactor(0.65f)
+        patternPaint.strokeWidth = radiusF * patternPaintStrokeRatio / largeSizeFactor(0.8f)
 
         dirtyDraw = true
+    }
+
+    private fun largeSizeFactor(factor:Float):Float {
+        if (largeSizeFactor == 1.0f) {
+            return 1.0f
+        }
+
+        return largeSizeFactor * factor
     }
 
     fun setPointPosAsWheel(outPoint: PointF, angle: Double) {
@@ -226,14 +248,14 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         setPointPos(pillLeftEnd1, centerPoint, PILL_ANGLE_TO, groundPoint)
         setPointPos(pillRightEnd2, centerPoint, PILL_ANGLE_FROM, groundPoint)
 
-        setPointPos(pillGroundBlock1, centerPoint, PILL_ANGLE_TO, groundPoint - radiusF * groundPlateHeightRatio)
-        setPointPos(pillGroundBlock2, centerPoint, PILL_ANGLE_FROM, groundPoint - radiusF * groundPlateHeightRatio)
+        setPointPos(pillGroundBlock1, centerPoint, PILL_ANGLE_TO, groundPoint - radiusF * groundPlateHeightRatio/ largeSizeFactor)
+        setPointPos(pillGroundBlock2, centerPoint, PILL_ANGLE_FROM, groundPoint - radiusF * groundPlateHeightRatio/ largeSizeFactor)
 
         roundRect.set(
                 pillRightEnd2.x - radiusF * groundPlateLengthRatio/2,
                 pillRightEnd2.y - outerPadding,
                 pillLeftEnd1.x + radiusF * groundPlateLengthRatio/2,
-                pillLeftEnd1.y - outerPadding + radiusF * groundPlateHeightRatio
+                pillLeftEnd1.y - outerPadding + radiusF * groundPlateHeightRatio / largeSizeFactor
         )
 
         var angle1 = patternStep.toDouble()
