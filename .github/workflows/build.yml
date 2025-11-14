@@ -29,5 +29,5 @@ jobs:
       - name: Save Cache Gradle
         uses: actions/cache/save@v4
         with:
-          key: ${{ steps.restore-gradle-cache.cache-primary-key }}
+          key: ${{ runner.os }}-gradle
           path: ~/.gradle/caches
