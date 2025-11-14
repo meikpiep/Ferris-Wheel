@@ -7,6 +7,7 @@ import android.graphics.Path
 import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.RectF
+import androidx.core.graphics.withSave
 import com.github.meikpiep.ferriswheel.R
 import kotlin.math.cos
 import kotlin.math.min
@@ -199,8 +200,7 @@ internal class WheelBaseDrawer(
             dirtyDraw = false
         }
 
-        canvas.apply {
-            save()
+        canvas.withSave {
             rotate(rotateAngle, centerPoint.x, centerPoint.y)
 
             drawCircle(centerPoint, radiusF * innerCircleRadiusRatio, innerCirclePaint)
@@ -213,7 +213,6 @@ internal class WheelBaseDrawer(
             drawLines(linePoints, patternPaint)
 
             drawCircle(centerPoint, getPatternRadiusInner(radiusF).toFloat(), patternPaint)
-            restore()
         }
     }
 

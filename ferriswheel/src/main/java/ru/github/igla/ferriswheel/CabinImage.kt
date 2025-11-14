@@ -1,7 +1,11 @@
 package ru.github.igla.ferriswheel
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PointF
+import android.graphics.RectF
+import androidx.core.graphics.withSave
 
 /**
  * Created by igor-lashkov on 17/01/2018.
@@ -54,8 +58,7 @@ internal class CabinImage(
         size: Int,
         scale: Float,
     ) {
-        canvas.apply {
-            save()
+        canvas.withSave {
             val arcRadiusScale = arcRadius * scale
             val cabinWindowHeightScale = cabinWindowHeight * scale
             val cabinCornerRadiusScale = cabinCornerRadius * scale
@@ -88,7 +91,12 @@ internal class CabinImage(
                 rightBorder - cabinStrokeHalf,
                 cabinBottom,
             )
-            drawRoundRect(dstRect, cabinCornerRadiusScale, cabinCornerRadiusScale, cabinPaint) // cabin
+            drawRoundRect(
+                dstRect,
+                cabinCornerRadiusScale,
+                cabinCornerRadiusScale,
+                cabinPaint,
+            ) // cabin
 
             // draw cabins top connection to ferris wheel
             val centerArc = leftBorder + halfSize
@@ -107,7 +115,12 @@ internal class CabinImage(
                 rightBorder,
                 cabinBottom,
             )
-            drawBottomRoundRect(canvas, dstRect, cabinPaintFill, cabinCornerRadiusScale) // cabin fill
+            drawBottomRoundRect(
+                canvas,
+                dstRect,
+                cabinPaintFill,
+                cabinCornerRadiusScale,
+            ) // cabin fill
 
             // draw upper part of bottom cabin, black by default
             drawRect(
@@ -117,7 +130,6 @@ internal class CabinImage(
                 blackLineBottom,
                 cabinLinePaint,
             )
-            restore()
         }
     }
 
