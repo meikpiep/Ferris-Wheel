@@ -3,8 +3,6 @@ package ru.github.igla.ferriswheel
 import android.content.Context
 import android.graphics.Paint
 
-internal fun Context.dp(dp: Float): Double = dpF(dp).toDouble()
-
 internal fun Context.dpF(dp: Float): Float = dp * resources.displayMetrics.density
 
 internal fun <T> lazyNonSafe(initializer: () -> T): Lazy<T> = lazy(LazyThreadSafetyMode.NONE, initializer)
