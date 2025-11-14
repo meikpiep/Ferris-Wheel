@@ -20,10 +20,12 @@ class FerrisWheelScreenshotTest {
     private val pathPrefix = "src/test/resources/screenshots"
 
     @Config(sdk = [30])
-    @Test fun sizing() {
+    @Test
+    fun sizing() {
         listOf(75, 150, 200, 400, 500, 600, 800, 1000, 1500).forEach { sizeInDp ->
             val activityScenario =
-                RobolectricActivityScenarioConfigurator.ForView()
+                RobolectricActivityScenarioConfigurator
+                    .ForView()
                     .setDeviceScreen(DeviceScreen(sizeInDp, sizeInDp))
                     .setUiMode(UiMode.NIGHT)
                     .setFontSize(FontSize.NORMAL)
@@ -31,13 +33,14 @@ class FerrisWheelScreenshotTest {
 
             val activity = activityScenario.waitForActivity()
 
-            val viewHolder = waitForView {
-                FerrisWheelView(
-                    activity
-                )
-            }
+            val viewHolder =
+                waitForView {
+                    FerrisWheelView(
+                        activity,
+                    )
+                }
 
-            viewHolder.captureRoboImage("$pathPrefix/size_dp_${sizeInDp}.png")
+            viewHolder.captureRoboImage("$pathPrefix/size_dp_$sizeInDp.png")
 
             activityScenario.close()
         }
@@ -47,7 +50,8 @@ class FerrisWheelScreenshotTest {
     @Test
     fun defaultConfig() {
         val activityScenario =
-            RobolectricActivityScenarioConfigurator.ForView()
+            RobolectricActivityScenarioConfigurator
+                .ForView()
                 .setDeviceScreen(DeviceScreen.Phone.PIXEL_4A)
                 .setUiMode(UiMode.NIGHT)
                 .setFontSize(FontSize.NORMAL)
@@ -56,11 +60,12 @@ class FerrisWheelScreenshotTest {
 
         val activity = activityScenario.waitForActivity()
 
-        val viewHolder = waitForView {
-            FerrisWheelView(
-                activity
-            )
-        }
+        val viewHolder =
+            waitForView {
+                FerrisWheelView(
+                    activity,
+                )
+            }
 
         viewHolder.captureRoboImage("$pathPrefix/default.png")
 
@@ -71,7 +76,8 @@ class FerrisWheelScreenshotTest {
     @Test
     fun lotsOfCabins() {
         val activityScenario =
-            RobolectricActivityScenarioConfigurator.ForView()
+            RobolectricActivityScenarioConfigurator
+                .ForView()
                 .setDeviceScreen(DeviceScreen.Phone.PIXEL_4A)
                 .setLocale("en_XA")
                 .setUiMode(UiMode.NIGHT)
@@ -80,16 +86,18 @@ class FerrisWheelScreenshotTest {
 
         val activity = activityScenario.waitForActivity()
 
-        val viewHolder = waitForView {
-            val view = FerrisWheelView(
-                activity
-            )
+        val viewHolder =
+            waitForView {
+                val view =
+                    FerrisWheelView(
+                        activity,
+                    )
 
-            view.numberOfCabins = 30
-            view.cabinSize = 3
+                view.numberOfCabins = 30
+                view.cabinSize = 3
 
-            view
-        }
+                view
+            }
 
         viewHolder.captureRoboImage("$pathPrefix/lots-of-cabins.png")
 

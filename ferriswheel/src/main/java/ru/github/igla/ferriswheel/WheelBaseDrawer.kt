@@ -1,11 +1,14 @@
 package ru.github.igla.ferriswheel
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.PointF
+import android.graphics.Rect
+import android.graphics.RectF
 import com.github.meikpiep.ferriswheel.R
-import kotlin.div
 import kotlin.math.cos
-import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sin
 
@@ -16,8 +19,10 @@ import kotlin.math.sin
 private const val PILL_ANGLE_FROM = 110.0
 private const val PILL_ANGLE_TO = 70.0
 
-internal class WheelBaseDrawer(private val context: Context, private val config: WheelViewConfig) : IWheelDrawer {
-
+internal class WheelBaseDrawer(
+    private val context: Context,
+    private val config: WheelViewConfig,
+) : IWheelDrawer {
     private val outerPadding = context.dpF(6f)
 
     private val firstCircleFromStarRatio = 28.0f / 180.5f
@@ -51,32 +56,39 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
 
     var rotateAngle = 0f
 
-    private val baseGroundPaint = smoothPaint(config.baseColor).apply {
-        style = Paint.Style.FILL
-    }
+    private val baseGroundPaint =
+        smoothPaint(config.baseColor).apply {
+            style = Paint.Style.FILL
+        }
 
-    private val patternPaint = smoothPaint(config.wheelColor).apply {
-        style = Paint.Style.STROKE
-    }
+    private val patternPaint =
+        smoothPaint(config.wheelColor).apply {
+            style = Paint.Style.STROKE
+        }
 
-    private val innerCirclePaint = smoothPaint(config.wheelColor).apply {
-        style = Paint.Style.STROKE
-    }
+    private val innerCirclePaint =
+        smoothPaint(config.wheelColor).apply {
+            style = Paint.Style.STROKE
+        }
 
-    private val pillLinePaint = smoothPaint(config.baseColor).apply {
-        style = Paint.Style.STROKE
-    }
+    private val pillLinePaint =
+        smoothPaint(config.baseColor).apply {
+            style = Paint.Style.STROKE
+        }
 
-    private val circleOuterPaint = smoothPaint(config.wheelColor).apply {
-        style = Paint.Style.STROKE
-    }
+    private val circleOuterPaint =
+        smoothPaint(config.wheelColor).apply {
+            style = Paint.Style.STROKE
+        }
 
-    private val circleInnerPaintStroke = smoothPaint(config.coreStyle.colorCircleStroke).apply {
-        style = Paint.Style.STROKE
-    }
-    private val circleInnerPaintFill = smoothPaint(config.coreStyle.colorCircleFill).apply {
-        style = Paint.Style.FILL
-    }
+    private val circleInnerPaintStroke =
+        smoothPaint(config.coreStyle.colorCircleStroke).apply {
+            style = Paint.Style.STROKE
+        }
+    private val circleInnerPaintFill =
+        smoothPaint(config.coreStyle.colorCircleFill).apply {
+            style = Paint.Style.FILL
+        }
 
     private val pillLeftStart1 = PointF()
     private val pillRightStart2 = PointF()
@@ -98,7 +110,8 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     private val linePoints = FloatArray((patternPoints + 1) * 4 * 2 + patternPoints * 4)
 
     private val paintStar by lazyNonSafe {
-        val color = config.coreStyle.starIcon?.colorFill
+        val color =
+            config.coreStyle.starIcon?.colorFill
                 ?: context.getColorRes(R.color.fwv_star_fill_color)
         smoothPaint(color).apply {
             style = Paint.Style.FILL
@@ -118,18 +131,19 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
 
         val minSizeThroughDensity = minSizeWithoutCabin.toFloat() / context.resources.displayMetrics.density
 
-        largeSizeFactor = when {
-            minSizeThroughDensity < 287 -> 1.0f
-            minSizeThroughDensity > 446 -> 2.0f
-            else -> 1.0f + ((minSizeThroughDensity - 287f) / (446f-287f))
-        }
+        largeSizeFactor =
+            when {
+                minSizeThroughDensity < 287 -> 1.0f
+                minSizeThroughDensity > 446 -> 2.0f
+                else -> 1.0f + ((minSizeThroughDensity - 287f) / (446f - 287f))
+            }
 
         println("$minSizeWithoutCabin - $minSizeThroughDensity - $largeSizeFactor")
         println("${context.resources.displayMetrics.density}")
 
         if (useCabinAutoSize) {
             this.ratioCabinSize = minSizeWithoutCabin / 300.0 /
-                    context.resources.displayMetrics.density / largeSizeFactor
+                context.resources.displayMetrics.density / largeSizeFactor
             this.cabinSize = (defaultCabinSize * ratioCabinSize).toInt()
         }
 
@@ -151,7 +165,7 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         dirtyDraw = true
     }
 
-    private fun largeSizeFactor(factor:Float):Float {
+    private fun largeSizeFactor(factor: Float): Float {
         if (largeSizeFactor == 1.0f) {
             return 1.0f
         }
@@ -159,7 +173,10 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         return largeSizeFactor * factor
     }
 
-    fun setPointPosAsWheel(outPoint: PointF, angle: Double) {
+    fun setPointPosAsWheel(
+        outPoint: PointF,
+        angle: Double,
+    ) {
         setPointPos(outPoint, this.centerPoint, angle, this.radius)
     }
 
@@ -175,7 +192,6 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     }
 
     override fun onPreDraw(canvas: Canvas) {
-
         val radiusF = radius.toFloat()
 
         if (dirtyDraw) {
@@ -201,7 +217,12 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         }
     }
 
-    private fun setLineAtIndex(arr: FloatArray, index: Int, line1: PointF, line2: PointF) {
+    private fun setLineAtIndex(
+        arr: FloatArray,
+        index: Int,
+        line1: PointF,
+        line2: PointF,
+    ) {
         arr[index] = line1.x
         arr[index + 1] = line1.y
         arr[index + 2] = line2.x
@@ -232,15 +253,18 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
             drawLine(pillLeftStart1, pillLeftEnd1, pillLinePaint)
             drawLine(pillRightStart2, pillRightEnd2, pillLinePaint)
             drawRoundRect(
-                    roundRect,
+                roundRect,
                 radiusF * groundPlateRoundedCornerRatio,
                 radiusF * groundPlateRoundedCornerRatio,
-                    baseGroundPaint)
+                baseGroundPaint,
+            )
         }
     }
 
-    private fun calcNewPosition(centerPoint: PointF, radius: Float) {
-
+    private fun calcNewPosition(
+        centerPoint: PointF,
+        radius: Float,
+    ) {
         setPointPos(pillLeftStart1, centerPoint, PILL_ANGLE_TO, (radiusF * groundPlateHeightRatio).toDouble())
         setPointPos(pillRightStart2, centerPoint, PILL_ANGLE_FROM, (radiusF * groundPlateHeightRatio).toDouble())
 
@@ -248,14 +272,14 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         setPointPos(pillLeftEnd1, centerPoint, PILL_ANGLE_TO, groundPoint)
         setPointPos(pillRightEnd2, centerPoint, PILL_ANGLE_FROM, groundPoint)
 
-        setPointPos(pillGroundBlock1, centerPoint, PILL_ANGLE_TO, groundPoint - radiusF * groundPlateHeightRatio/ largeSizeFactor)
-        setPointPos(pillGroundBlock2, centerPoint, PILL_ANGLE_FROM, groundPoint - radiusF * groundPlateHeightRatio/ largeSizeFactor)
+        setPointPos(pillGroundBlock1, centerPoint, PILL_ANGLE_TO, groundPoint - radiusF * groundPlateHeightRatio / largeSizeFactor)
+        setPointPos(pillGroundBlock2, centerPoint, PILL_ANGLE_FROM, groundPoint - radiusF * groundPlateHeightRatio / largeSizeFactor)
 
         roundRect.set(
-                pillRightEnd2.x - radiusF * groundPlateLengthRatio/2,
-                pillRightEnd2.y - outerPadding,
-                pillLeftEnd1.x + radiusF * groundPlateLengthRatio/2,
-                pillLeftEnd1.y - outerPadding + radiusF * groundPlateHeightRatio / largeSizeFactor
+            pillRightEnd2.x - radiusF * groundPlateLengthRatio / 2,
+            pillRightEnd2.y - outerPadding,
+            pillLeftEnd1.x + radiusF * groundPlateLengthRatio / 2,
+            pillLeftEnd1.y - outerPadding + radiusF * groundPlateHeightRatio / largeSizeFactor,
         )
 
         var angle1 = patternStep.toDouble()
@@ -275,7 +299,10 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
         fillArrayWithData()
     }
 
-    private fun measureStarPath(centerPoint: PointF, size: Float) {
+    private fun measureStarPath(
+        centerPoint: PointF,
+        size: Float,
+    ) {
         pathStar.apply {
             val half = size / 2f
             val fromX = centerPoint.x - half
@@ -298,18 +325,31 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     }
 
     private fun getPatternRadiusOuter(radius: Float): Double = radius - circleOuterPaint.strokeWidth / 2.0
+
     private fun getPatternRadiusInner(radius: Float): Double = getPatternRadiusOuter(radius) - radiusF * trianglePatternLengthRatio
 
-
-    private fun Canvas.drawLine(p1: PointF, p2: PointF, paint: Paint) {
+    private fun Canvas.drawLine(
+        p1: PointF,
+        p2: PointF,
+        paint: Paint,
+    ) {
         drawLine(p1.x, p1.y, p2.x, p2.y, paint)
     }
 
-    private fun Canvas.drawCircle(point: PointF, radius: Float, paint: Paint) {
+    private fun Canvas.drawCircle(
+        point: PointF,
+        radius: Float,
+        paint: Paint,
+    ) {
         drawCircle(point.x, point.y, radius, paint)
     }
 
-    private fun setPointPos(outPoint: PointF, centerPoint: PointF, angle: Double, radius: Double) {
+    private fun setPointPos(
+        outPoint: PointF,
+        centerPoint: PointF,
+        angle: Double,
+        radius: Double,
+    ) {
         outPoint.x = getXPos(centerPoint.x, radius, angle).toFloat()
         outPoint.y = getYPos(centerPoint.y, radius, angle).toFloat()
     }
@@ -317,9 +357,17 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     /***
      * https://en.wikipedia.org/wiki/Sine#Relation_to_the_unit_circle
      */
-    private fun getXPos(centerX: Float, r: Double, angle: Double): Double = centerX + r * cos(getRadians(angle))
+    private fun getXPos(
+        centerX: Float,
+        r: Double,
+        angle: Double,
+    ): Double = centerX + r * cos(getRadians(angle))
 
-    private fun getYPos(centerY: Float, r: Double, angle: Double): Double = centerY + r * sin(getRadians(angle))
+    private fun getYPos(
+        centerY: Float,
+        r: Double,
+        angle: Double,
+    ): Double = centerY + r * sin(getRadians(angle))
 
     private fun getRadians(angle: Double): Double = Math.toRadians(angle)
 }

@@ -5,11 +5,9 @@ import android.animation.ValueAnimator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 
-
 /**
  * Created by igor-lashkov on 12/01/2018.
  */
-
 
 internal const val CABIN_TILT_MIN = 1.0f
 internal const val CABIN_TILT_MAX = 3.0f
@@ -18,20 +16,25 @@ private const val DURATION_TILT_MIN = 400L
 private const val DURATION_TILT_MAX = 800L
 
 internal class TiltAnimation {
-
     private var animator: ValueAnimator? = null
 
     private val animInterpolator = LinearInterpolator()
     private val durationInterpolator = DecelerateInterpolator()
 
-    fun startAnimation(rotateSpeed: Int, listener: OnAngleChangeListener) {
+    fun startAnimation(
+        rotateSpeed: Int,
+        listener: OnAngleChangeListener,
+    ) {
         cancelAnimation()
         createAnimator(listener, rotateSpeed.toFloat()).apply {
             start()
         }
     }
 
-    private fun createAnimator(listener: OnAngleChangeListener, rotateSpeed: Float): ObjectAnimator {
+    private fun createAnimator(
+        listener: OnAngleChangeListener,
+        rotateSpeed: Float,
+    ): ObjectAnimator {
         val property = FloatProperty.createAngleProperty(listener)
 
         val ratioSpeed = rotateSpeed / MAX_ROTATE_SPEED

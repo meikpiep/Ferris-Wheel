@@ -7,8 +7,12 @@ import android.graphics.*
  * Created by igor-lashkov on 17/01/2018.
  */
 
-internal class CabinImage(context: Context, val imageNumber: Int, private val startAngle: Double, colorStyle: CabinStyle) {
-
+internal class CabinImage(
+    context: Context,
+    val imageNumber: Int,
+    private val startAngle: Double,
+    colorStyle: CabinStyle,
+) {
     val wheelPos: PointF = PointF()
 
     var tiltAngle = 0f
@@ -22,26 +26,34 @@ internal class CabinImage(context: Context, val imageNumber: Int, private val st
     private val cabinCornerRadius = context.dpF(8f)
     private val arcRadius = context.dpF(8f)
 
-    private var cabinLinePaint: Paint = smoothPaint(colorStyle.colorLineStroke).apply {
-        style = Paint.Style.FILL
-    }
+    private var cabinLinePaint: Paint =
+        smoothPaint(colorStyle.colorLineStroke).apply {
+            style = Paint.Style.FILL
+        }
     private var cabinPaint: Paint
     private var cabinPaintFill: Paint
 
     init {
         colorStyle.colorFill.apply {
-            cabinPaint = smoothPaint(this).apply {
-                style = Paint.Style.STROKE
-            }
-            cabinPaintFill = smoothPaint(this).apply {
-                style = Paint.Style.FILL
-            }
+            cabinPaint =
+                smoothPaint(this).apply {
+                    style = Paint.Style.STROKE
+                }
+            cabinPaintFill =
+                smoothPaint(this).apply {
+                    style = Paint.Style.FILL
+                }
         }
     }
 
     internal fun getAngleOffset(rotateAngle: Float): Double = (startAngle + rotateAngle) % 360.0
 
-    internal fun drawCabin(canvas: Canvas, position: PointF, size: Int, scale: Float) {
+    internal fun drawCabin(
+        canvas: Canvas,
+        position: PointF,
+        size: Int,
+        scale: Float,
+    ) {
         canvas.apply {
             save()
             val arcRadiusScale = arcRadius * scale
@@ -71,48 +83,57 @@ internal class CabinImage(context: Context, val imageNumber: Int, private val st
 
             // draw cabin hull
             dstRect.set(
-                    leftBorder + cabinStrokeHalf,
-                    cabinTop,
-                    rightBorder - cabinStrokeHalf,
-                    cabinBottom)
-            drawRoundRect(dstRect, cabinCornerRadiusScale, cabinCornerRadiusScale, cabinPaint) //cabin
+                leftBorder + cabinStrokeHalf,
+                cabinTop,
+                rightBorder - cabinStrokeHalf,
+                cabinBottom,
+            )
+            drawRoundRect(dstRect, cabinCornerRadiusScale, cabinCornerRadiusScale, cabinPaint) // cabin
 
             // draw cabins top connection to ferris wheel
             val centerArc = leftBorder + halfSize
-            dstRect.set(centerArc - arcRadiusScale * 0.8f,
-                    cabinTop - arcRadiusScale,
-                    centerArc + arcRadiusScale * 0.8f,
-                    topBorder + arcRadiusScale)
-            drawArc(dstRect, 180f, 180f, true, cabinPaintFill) //top arc
+            dstRect.set(
+                centerArc - arcRadiusScale * 0.8f,
+                cabinTop - arcRadiusScale,
+                centerArc + arcRadiusScale * 0.8f,
+                topBorder + arcRadiusScale,
+            )
+            drawArc(dstRect, 180f, 180f, true, cabinPaintFill) // top arc
 
             // draw bottom part of cabin
             dstRect.set(
-                    leftBorder,
-                    cabinTop + cabinWindowHeightScale,
-                    rightBorder,
-                    cabinBottom)
-            drawBottomRoundRect(canvas, dstRect, cabinPaintFill, cabinCornerRadiusScale) //cabin fill
+                leftBorder,
+                cabinTop + cabinWindowHeightScale,
+                rightBorder,
+                cabinBottom,
+            )
+            drawBottomRoundRect(canvas, dstRect, cabinPaintFill, cabinCornerRadiusScale) // cabin fill
 
             // draw upper part of bottom cabin, black by default
             drawRect(
-                    leftBorder,
-                    blackLineTop,
-                    rightBorder,
-                    blackLineBottom,
-                    cabinLinePaint
+                leftBorder,
+                blackLineTop,
+                rightBorder,
+                blackLineBottom,
+                cabinLinePaint,
             )
             restore()
         }
     }
 
-    private fun drawBottomRoundRect(canvas: Canvas, rect: RectF, paint: Paint, radius: Float) {
+    private fun drawBottomRoundRect(
+        canvas: Canvas,
+        rect: RectF,
+        paint: Paint,
+        radius: Float,
+    ) {
         canvas.drawRoundRect(rect, radius, radius, paint)
         canvas.drawRect(
-                rect.left,
-                rect.top,
-                rect.right,
-                rect.bottom - radius,
-                paint
+            rect.left,
+            rect.top,
+            rect.right,
+            rect.bottom - radius,
+            paint,
         )
     }
 }

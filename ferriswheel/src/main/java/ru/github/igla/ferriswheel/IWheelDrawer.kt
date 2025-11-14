@@ -8,6 +8,8 @@ import android.graphics.Rect
  */
 interface IWheelDrawer {
     fun onPreDraw(canvas: Canvas)
+
     fun onPostDraw(canvas: Canvas)
+
     fun configure(rect: Rect)
-}
+} 

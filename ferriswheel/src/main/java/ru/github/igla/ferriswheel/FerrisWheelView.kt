@@ -12,7 +12,6 @@ import android.view.MotionEvent
 import android.view.View
 import com.github.meikpiep.ferriswheel.R
 
-
 /**
  * Created by igor-lashkov on 11/01/2018.
  */
@@ -21,32 +20,38 @@ internal const val DEFAULT_CABINS_NUMBER = 8
 internal const val DEFAULT_ROTATES_SPEED_DEGREE_IN_SEC = 6
 
 class FerrisWheelView : View {
-
     fun interface OnClickCenterListener {
         fun onClickCenter(e: MotionEvent)
     }
 
     fun interface OnClickCabinListener {
-        fun onClickCabin(cabinNumber: Int, e: MotionEvent)
+        fun onClickCabin(
+            cabinNumber: Int,
+            e: MotionEvent,
+        )
     }
 
     private val cabinLineColorDefault: Int = context.getColorRes(R.color.fwv_cabin_line_color)
-    private val cabinColorsDefault: List<CabinStyle> = resources.getStringArray(R.array.cabin_colors_array).map { color ->
-        CabinStyle(Color.parseColor(color), cabinLineColorDefault)
-    }
+    private val cabinColorsDefault: List<CabinStyle> =
+        resources.getStringArray(R.array.cabin_colors_array).map { color ->
+            CabinStyle(Color.parseColor(color), cabinLineColorDefault)
+        }
     private val baseColorDefault: Int = context.getColorRes(R.color.fwv_base_color)
     private val wheelColorDefault: Int = context.getColorRes(R.color.fwv_wheel_color)
-    private val coreStyleDefault: CoreStyle = CoreStyle(
+    private val coreStyleDefault: CoreStyle =
+        CoreStyle(
             context.getColorRes(R.color.fwv_star_bg_color),
             baseColorDefault,
-            StarIcon(context.getColorRes(R.color.fwv_star_fill_color))
-    )
+            StarIcon(context.getColorRes(R.color.fwv_star_fill_color)),
+        )
 
-    private var config: WheelViewConfig = WheelViewConfig(
+    private var config: WheelViewConfig =
+        WheelViewConfig(
             baseColor = baseColorDefault,
             wheelColor = wheelColorDefault,
             cabinColors = cabinColorsDefault,
-            coreStyle = coreStyleDefault)
+            coreStyle = coreStyleDefault,
+        )
 
     var coreStyle: CoreStyle = coreStyleDefault
         set(value) {
@@ -62,11 +67,12 @@ class FerrisWheelView : View {
         set(value) {
             field = value
             config.baseColor = value
-            coreStyle = CoreStyle(
+            coreStyle =
+                CoreStyle(
                     coreStyle.colorCircleFill,
                     value,
-                    coreStyle.starIcon
-            )
+                    coreStyle.starIcon,
+                )
         }
     var wheelColor: Int = 0
         set(value) {
@@ -141,7 +147,10 @@ class FerrisWheelView : View {
         initView(context, attrs)
     }
 
-    private fun initView(context: Context, attrs: AttributeSet? = null) {
+    private fun initView(
+        context: Context,
+        attrs: AttributeSet? = null,
+    ) {
         if (!isInEditMode && attrs != null) {
             context.obtainStyledAttributes(attrs, R.styleable.FerrisWheelView).apply {
                 isClockwise = getBoolean(R.styleable.FerrisWheelView_fwv_isClockwise, true)
@@ -168,15 +177,20 @@ class FerrisWheelView : View {
         }
 
         if (!isInEditMode) {
-            this.gestureDetector = GestureDetector(context, InteractGestureListener
-            { e ->
-                performClickEvent(config, e)
-            })
+            this.gestureDetector =
+                GestureDetector(
+                    context,
+                    InteractGestureListener
+                        { e ->
+                            performClickEvent(config, e)
+                        },
+                )
         }
 
-        wheelDrawable = WheelDrawable(context).apply {
-            callback = this@FerrisWheelView
-        }
+        wheelDrawable =
+            WheelDrawable(context).apply {
+                callback = this@FerrisWheelView
+            }
         this@FerrisWheelView.setDrawable(wheelDrawable)
         wheelDrawable.build(config)
     }
@@ -190,7 +204,10 @@ class FerrisWheelView : View {
         }
     }
 
-    private fun performClickEvent(wheelViewConfig: WheelViewConfig, e: MotionEvent): Boolean {
+    private fun performClickEvent(
+        wheelViewConfig: WheelViewConfig,
+        e: MotionEvent,
+    ): Boolean {
         wheelViewConfig.cabinListener?.let { listener ->
             val cabin = wheelDrawable.findCabinByPoint(e.x, e.y)
             if (cabin != null) {

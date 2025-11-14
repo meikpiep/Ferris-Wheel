@@ -7,7 +7,6 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import kotlin.math.pow
 
-
 /**
  * Created by igor-lashkov on 11/01/2018.
  */
@@ -17,9 +16,8 @@ internal class StateController(
     private val callback: Drawable.Callback,
     private val context: Context,
     private var viewConfig: WheelViewConfig,
-    bounds: Rect
+    bounds: Rect,
 ) {
-
     private var lastBounds: Rect = bounds
     private var cabinImages: List<CabinImage>
     private val wheelBaseDrawer by lazyNonSafe { WheelBaseDrawer(context, viewConfig) }
@@ -33,17 +31,19 @@ internal class StateController(
         configure(bounds, orientation)
     }
 
-    private val rotateListener = OnAngleChangeListener { angle ->
-        wheelBaseDrawer.rotateAngle = angle
-        callback.invalidateDrawable(drawable)
-    }
-
-    private val tiltListener = OnAngleChangeListener { angle ->
-        cabinImages.forEachNoIterator { item ->
-            item.tiltAngle = angle
+    private val rotateListener =
+        OnAngleChangeListener { angle ->
+            wheelBaseDrawer.rotateAngle = angle
+            callback.invalidateDrawable(drawable)
         }
-        callback.invalidateDrawable(drawable)
-    }
+
+    private val tiltListener =
+        OnAngleChangeListener { angle ->
+            cabinImages.forEachNoIterator { item ->
+                item.tiltAngle = angle
+            }
+            callback.invalidateDrawable(drawable)
+        }
 
     fun setData(viewConfig: WheelViewConfig) {
         cabinImages = createListOfCabins(viewConfig)
@@ -64,7 +64,10 @@ internal class StateController(
         }
     }
 
-    fun configure(bounds: Rect, orientation: Int) {
+    fun configure(
+        bounds: Rect,
+        orientation: Int,
+    ) {
         pauseAnimation()
         configureSizes(bounds)
         if (orientation != this.orientation) {
@@ -96,14 +99,24 @@ internal class StateController(
         point.set(wheelBaseDrawer.centerPoint)
     }
 
-    private fun isPointInsideRadius(x: Float, y: Float, centerPoint: PointF, radius: Float): Boolean =
-            (x - centerPoint.x).pow(2f) +
-                    (y - centerPoint.y).pow(2f) <= radius * radius
+    private fun isPointInsideRadius(
+        x: Float,
+        y: Float,
+        centerPoint: PointF,
+        radius: Float,
+    ): Boolean =
+        (x - centerPoint.x).pow(2f) +
+            (y - centerPoint.y).pow(2f) <= radius * radius
 
-    fun isCenterCoordinate(x: Float, y: Float): Boolean = isPointInsideRadius(
-            x, y, wheelBaseDrawer.centerPoint, (wheelBaseDrawer.radius / 2.0).toFloat())
+    fun isCenterCoordinate(
+        x: Float,
+        y: Float,
+    ): Boolean = isPointInsideRadius(x, y, wheelBaseDrawer.centerPoint, (wheelBaseDrawer.radius / 2.0).toFloat())
 
-    fun getCabinByPoint(x: Float, y: Float): CabinImage? {
+    fun getCabinByPoint(
+        x: Float,
+        y: Float,
+    ): CabinImage? {
         val cabinSize = wheelBaseDrawer.cabinSize
         val cabinSizeHalf = cabinSize / 2f
         cabinImages.forEachNoIterator { item ->
@@ -118,10 +131,18 @@ internal class StateController(
         return null
     }
 
-    private fun contains(left: Float, top: Float, right: Float, bottom: Float, x: Float, y: Float): Boolean {
-        return (left < right && top < bottom
-                && x >= left && x < right && y >= top && y < bottom)
-    }
+    private fun contains(
+        left: Float,
+        top: Float,
+        right: Float,
+        bottom: Float,
+        x: Float,
+        y: Float,
+    ): Boolean =
+        (
+            left < right && top < bottom &&
+                x >= left && x < right && y >= top && y < bottom
+        )
 
     fun drawWheel(canvas: Canvas) {
         wheelBaseDrawer.onPreDraw(canvas)
@@ -131,18 +152,19 @@ internal class StateController(
             val offsetAngle = getAngleOffset(item)
             wheelBaseDrawer.setPointPosAsWheel(item.wheelPos, offsetAngle)
             item.drawCabin(
-                    canvas,
-                    item.wheelPos,
-                    cabinSize,
-                    ratioCabinSize
+                canvas,
+                item.wheelPos,
+                cabinSize,
+                ratioCabinSize,
             )
         }
         wheelBaseDrawer.onPostDraw(canvas)
     }
 
     fun startAnimation() {
-        if (rotateAnimation.isRunning
-                || cabinImages.isEmpty()) {
+        if (rotateAnimation.isRunning ||
+            cabinImages.isEmpty()
+        ) {
             return
         }
         rotateAnimation.startAnimation(rotateListener)
