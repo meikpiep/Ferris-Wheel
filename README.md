@@ -84,18 +84,18 @@ Or you can stop/pause/resume animation by the following methods:
 
 
 ## Attributes
-| attr                     | format    | default                                                                                                  |                       description                       |
-|--------------------------|:----------|:---------------------------------------------------------------------------------------------------------|:-------------------------------------------------------:|
-| fwv_cabinSize            | dimension | 42dp                                                                                                     |                 the size of each cabin                  |
-| fwv_cabinsNumber         | integer   | 8                                                                                                        |            the number of cabins on the wheel            |
-| fwv_isClockwise          | boolean   | true                                                                                                     |               toogle the rotate direction               |
-| fwv_isAutoRotate         | boolean   | true                                                                                                     | start rotating wheel automatically after initialization |
-| fwv_rotateSpeed          | integer   | 6                                                                                                        |        wheel speed rotation measured in degrees         |
-| fwv_startAngle           | float     | 0                                                                                                        |        angle at which wheel will start to rotate        |
-| fwv_wheelStrokeColor     | color     | ![#73302b](https://placehold.it/15/73302b/000000?text=+) `#73302b`                                       |        with this color the wheel will be filled         |
-| fwv_baseStrokeColor      | color     | ![#666666](https://placehold.it/15/666666/000000?text=+) `#666666`                                       |      with this color the wheel base will be filled      |
-| fwv_cabinFillColor       | color     | [array](https://github.com/meikpiep/Ferris-Wheel/blob/master/ferriswheel/src/main/res/values/arrays.xml) |        with this color the cabin will be filled         |
-| fwv_cabinLineStrokeColor | color     | ![#000000](https://placehold.it/15/000000/000000?text=+) `#000000`                                       |      with this color the cabin line will be filled      |
+| attr                     | format    | default                                                                                                |                       description                       |
+|--------------------------|:----------|:-------------------------------------------------------------------------------------------------------|:-------------------------------------------------------:|
+| fwv_cabinSize            | dimension | 42dp                                                                                                   |                 the size of each cabin                  |
+| fwv_cabinsNumber         | integer   | 8                                                                                                      |            the number of cabins on the wheel            |
+| fwv_isClockwise          | boolean   | true                                                                                                   |               toogle the rotate direction               |
+| fwv_isAutoRotate         | boolean   | true                                                                                                   | start rotating wheel automatically after initialization |
+| fwv_rotateSpeed          | integer   | 6                                                                                                      |        wheel speed rotation measured in degrees         |
+| fwv_startAngle           | float     | 0                                                                                                      |        angle at which wheel will start to rotate        |
+| fwv_wheelStrokeColor     | color     | ![#73302b](https://placehold.it/15/73302b/000000?text=+) `#73302b`                                     |        with this color the wheel will be filled         |
+| fwv_baseStrokeColor      | color     | ![#666666](https://placehold.it/15/666666/000000?text=+) `#666666`                                     |      with this color the wheel base will be filled      |
+| fwv_cabinFillColor       | color     | [array](https://github.com/meikpiep/Ferris-Wheel/blob/main/ferriswheel/src/main/res/values/arrays.xml) |        with this color the cabin will be filled         |
+| fwv_cabinLineStrokeColor | color     | ![#000000](https://placehold.it/15/000000/000000?text=+) `#000000`                                     |      with this color the cabin line will be filled      |
 
 Issues
 ------
@@ -120,4 +120,4 @@ feel free to file an [issue](https://github.com/meikpiep/Ferris-Wheel/issues)
     limitations under the License.
 
  [license-svg]: https://img.shields.io/badge/license-APACHE-lightgrey.svg
- [license-link]: https://github.com/meikpiep/Ferris-Wheel/blob/master/LICENSE
+ [license-link]: https://github.com/meikpiep/Ferris-Wheel/blob/main/LICENSE
