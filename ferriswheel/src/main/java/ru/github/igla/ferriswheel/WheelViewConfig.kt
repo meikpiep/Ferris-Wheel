@@ -9,6 +9,7 @@ internal const val MAX_ROTATE_SPEED = 100f
 
 internal class WheelViewConfig(
         var cabinsNumber: Int = DEFAULT_CABINS_NUMBER,
+        var calculateCabinsNumber: Boolean = false,
         var rotateSpeed: Int = DEFAULT_ROTATES_SPEED_DEGREE_IN_SEC,
         var isAutoRotate: Boolean = true,
         var isClockwise: Boolean = true,

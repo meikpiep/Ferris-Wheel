@@ -21,6 +21,7 @@ internal class StateController(
 ) {
 
     private var lastBounds: Rect = bounds
+    private var currentNumberOfCabins: Int = viewConfig.cabinsNumber
     private var cabinImages: List<CabinImage>
     private val wheelBaseDrawer by lazyNonSafe { WheelBaseDrawer(context, viewConfig) }
     private val tiltAnimation by lazyNonSafe { TiltAnimation() }
@@ -29,8 +30,8 @@ internal class StateController(
     private var orientation = context.resources.configuration.orientation
 
     init {
-        cabinImages = createListOfCabins(viewConfig)
         configure(bounds, orientation)
+        cabinImages = createListOfCabins(viewConfig)
     }
 
     private val rotateListener = OnAngleChangeListener { angle ->
@@ -46,15 +47,15 @@ internal class StateController(
     }
 
     fun setData(viewConfig: WheelViewConfig) {
-        cabinImages = createListOfCabins(viewConfig)
         configure(lastBounds, orientation)
+        cabinImages = createListOfCabins(viewConfig)
     }
 
     private fun createListOfCabins(viewConfig: WheelViewConfig): List<CabinImage> {
-        if (viewConfig.cabinsNumber == 0) {
+        if (currentNumberOfCabins == 0) {
             return emptyList()
         }
-        val imgCount = viewConfig.cabinsNumber
+        val imgCount = currentNumberOfCabins
         val rad = 360.0 / imgCount
         var offsetAngle = 0.0
         return List(imgCount) { number ->
@@ -77,9 +78,12 @@ internal class StateController(
 
     private fun configureSizes(bounds: Rect) {
         if (bounds.isEmpty) {
+            currentNumberOfCabins = wheelBaseDrawer.currentNumberOfCabins()
             return
         }
         wheelBaseDrawer.configure(bounds)
+        currentNumberOfCabins = wheelBaseDrawer.currentNumberOfCabins()
+
         resetImagesState()
     }
 

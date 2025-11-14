@@ -93,11 +93,17 @@ class FerrisWheelView : View {
     var numberOfCabins: Int = DEFAULT_CABINS_NUMBER
         set(value) {
             if (value < 0) {
-                throw ExceptionInInitializerError("Number of cabins should be not negative")
+                throw ExceptionInInitializerError("Number of cabins should not be negative")
             }
             field = value
             config.cabinsNumber = value
         }
+    var calculateNumberOfCabins: Boolean = false
+        set(value) {
+            field = value
+            config.calculateCabinsNumber = value
+        }
+
     var isClockwise: Boolean = true
         set(value) {
             field = value

@@ -322,4 +322,13 @@ internal class WheelBaseDrawer(private val context: Context, private val config:
     private fun getYPos(centerY: Float, r: Double, angle: Double): Double = centerY + r * sin(getRadians(angle))
 
     private fun getRadians(angle: Double): Double = Math.toRadians(angle)
+    fun currentNumberOfCabins(): Int {
+        if (config.calculateCabinsNumber) {
+            println("calculated: ${largeSizeFactor}")
+            return (DEFAULT_CABINS_NUMBER * largeSizeFactor).toInt()
+        }
+
+        println("static: ${config.cabinsNumber}")
+        return config.cabinsNumber
+    }
 }

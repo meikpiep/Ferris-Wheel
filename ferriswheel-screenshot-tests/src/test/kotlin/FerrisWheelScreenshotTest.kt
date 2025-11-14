@@ -32,9 +32,13 @@ class FerrisWheelScreenshotTest {
             val activity = activityScenario.waitForActivity()
 
             val viewHolder = waitForView {
-                FerrisWheelView(
+                val ferrisView = FerrisWheelView(
                     activity
                 )
+
+                ferrisView.calculateNumberOfCabins = true
+
+                ferrisView
             }
 
             viewHolder.captureRoboImage("$pathPrefix/size_dp_${sizeInDp}.png")
