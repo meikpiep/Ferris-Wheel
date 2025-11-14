@@ -4,7 +4,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("maven-publish")
-    //alias(libs.plugins.roborazzi)
+    // alias(libs.plugins.roborazzi)
 }
 
 val groupId = "com.github.meikpiep"
@@ -94,4 +94,8 @@ publishing {
             }
         }
     }
+}
+
+dependencies {
+    implementation(libs.androidx.ktx)
 }

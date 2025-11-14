@@ -2,7 +2,6 @@ package ru.github.igla.ferriswheel
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.graphics.PointF
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -10,6 +9,7 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.graphics.toColorInt
 import com.github.meikpiep.ferriswheel.R
 
 /**
@@ -34,7 +34,7 @@ class FerrisWheelView : View {
     private val cabinLineColorDefault: Int = context.getColorRes(R.color.fwv_cabin_line_color)
     private val cabinColorsDefault: List<CabinStyle> =
         resources.getStringArray(R.array.cabin_colors_array).map { color ->
-            CabinStyle(Color.parseColor(color), cabinLineColorDefault)
+            CabinStyle(color.toColorInt(), cabinLineColorDefault)
         }
     private val baseColorDefault: Int = context.getColorRes(R.color.fwv_base_color)
     private val wheelColorDefault: Int = context.getColorRes(R.color.fwv_wheel_color)
