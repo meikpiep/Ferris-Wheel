@@ -28,12 +28,12 @@ import android.util.Property;
  */
 public abstract class FloatProperty<T> extends Property<T, Float> {
  
-    private FloatProperty(String name) {
+    private FloatProperty(final String name) {
         super(Float.class, name);
     }
 
     @Override
-    public Float get(T object) {
+    public Float get(final T object) {
         return 0f;
     }
 
@@ -44,14 +44,14 @@ public abstract class FloatProperty<T> extends Property<T, Float> {
     public abstract void setValue(T object, float value);
 
     @Override
-    final public void set(T object, Float value) {
+	public final void set(final T object, final Float value) {
         setValue(object, value);
     }
 
-    public static FloatProperty createAngleProperty(final OnAngleChangeListener listener) {
-        return new FloatProperty<OnAngleChangeListener>("angle") {
+    public static FloatProperty<OnAngleChangeListener> createAngleProperty(final OnAngleChangeListener listener) {
+        return new FloatProperty<>("angle") {
             @Override
-            public void setValue(OnAngleChangeListener obj, float value) {
+            public void setValue(final OnAngleChangeListener obj, final float value) {
                 listener.onValueChange(value);
             }
         };
