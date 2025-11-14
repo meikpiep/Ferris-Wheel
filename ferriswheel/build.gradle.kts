@@ -57,6 +57,7 @@ android {
 publishing {
     publications {
         create<MavenPublication>("maven") {
+            description = libraryDescription
             groupId = groupId
             artifactId = artifact
             version = libraryVersion
@@ -66,6 +67,7 @@ publishing {
             }
 
             pom {
+                name = libraryName
                 licenses {
                     license {
                         name = "The Apache Software License, Version 2.0"
