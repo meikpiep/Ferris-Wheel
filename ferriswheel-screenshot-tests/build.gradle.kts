@@ -17,7 +17,6 @@ android {
 
     defaultConfig {
         minSdk = 23 // needed by Roborazzi
-        targetSdk = Configuration.TARGET_SDK
     }
 
     buildTypes {
