@@ -27,15 +27,6 @@ android {
         }
     }
 
-    flavorDimensions += "version"
-
-    productFlavors {
-        create("development") {
-            dimension = "version"
-            minSdk = 23
-        }
-    }
-
     testOptions {
         unitTests.isIncludeAndroidResources = true
 
