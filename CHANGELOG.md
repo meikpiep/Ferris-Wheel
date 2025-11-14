@@ -4,6 +4,9 @@ Change Log
 Unreleased
 ----------
 
+* Use Android Gradle Plugin 8.13.1 (was 8.11.1)
+* Upgrade Android SDK to 36 (was 35)
+
 Version 2.0.0 *(2025-11-09)*
 ----------------------------
 
