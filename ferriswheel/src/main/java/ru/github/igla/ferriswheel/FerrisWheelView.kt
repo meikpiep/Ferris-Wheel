@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import com.github.meikpiep.ferriswheel.R
 
@@ -31,18 +32,18 @@ class FerrisWheelView : View {
         )
     }
 
-    private val cabinLineColorDefault: Int = context.getColorRes(R.color.fwv_cabin_line_color)
+    private val cabinLineColorDefault: Int = ContextCompat.getColor(context, R.color.fwv_cabin_line_color)
     private val cabinColorsDefault: List<CabinStyle> =
         resources.getStringArray(R.array.cabin_colors_array).map { color ->
             CabinStyle(color.toColorInt(), cabinLineColorDefault)
         }
-    private val baseColorDefault: Int = context.getColorRes(R.color.fwv_base_color)
-    private val wheelColorDefault: Int = context.getColorRes(R.color.fwv_wheel_color)
+    private val baseColorDefault: Int = ContextCompat.getColor(context, R.color.fwv_base_color)
+    private val wheelColorDefault: Int = ContextCompat.getColor(context, R.color.fwv_wheel_color)
     private val coreStyleDefault: CoreStyle =
         CoreStyle(
-            context.getColorRes(R.color.fwv_star_bg_color),
+            ContextCompat.getColor(context, R.color.fwv_star_bg_color),
             baseColorDefault,
-            StarIcon(context.getColorRes(R.color.fwv_star_fill_color)),
+            StarIcon(ContextCompat.getColor(context, R.color.fwv_star_fill_color)),
         )
 
     private var config: WheelViewConfig =

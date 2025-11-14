@@ -7,6 +7,7 @@ import android.graphics.Path
 import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.RectF
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.withSave
 import com.github.meikpiep.ferriswheel.R
 import kotlin.math.cos
@@ -113,7 +114,7 @@ internal class WheelBaseDrawer(
     private val paintStar by lazyNonSafe {
         val color =
             config.coreStyle.starIcon?.colorFill
-                ?: context.getColorRes(R.color.fwv_star_fill_color)
+                ?: ContextCompat.getColor(context, R.color.fwv_star_fill_color)
         smoothPaint(color).apply {
             style = Paint.Style.FILL
         }
