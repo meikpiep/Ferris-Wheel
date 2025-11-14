@@ -4,7 +4,6 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("maven-publish")
-    // alias(libs.plugins.roborazzi)
 }
 
 val groupId = "com.github.meikpiep"
@@ -35,13 +34,6 @@ android {
     }
 
     flavorDimensions += "version"
-
-    /*productFlavors {
-        create("development") {
-            dimension = "version"
-            minSdk = 23
-        }
-    }*/
 
     publishing {
         singleVariant("release") {
