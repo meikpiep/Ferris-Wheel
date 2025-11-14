@@ -12,12 +12,12 @@ val artifact = "ferriswheel"
 
 android {
     namespace = "$groupId.${artifact}screenshottests"
-    compileSdkVersion = Configuration.compileSdk
-    buildToolsVersion = Configuration.buildTools
+    compileSdkVersion = Configuration.COMPILE_SDK
+    buildToolsVersion = Configuration.BUILD_TOOLS
 
     defaultConfig {
         minSdk = 23 // needed by Roborazzi
-        targetSdk = Configuration.targetSdk
+        targetSdk = Configuration.TARGET_SDK
     }
 
     buildTypes {

@@ -19,12 +19,12 @@ version = libraryVersion
 android {
     namespace = "$groupId.$artifact"
 
-    compileSdkVersion = Configuration.compileSdk
-    buildToolsVersion = Configuration.buildTools
+    compileSdkVersion = Configuration.COMPILE_SDK
+    buildToolsVersion = Configuration.BUILD_TOOLS
 
     defaultConfig {
-        minSdk = Configuration.minSdk
-        targetSdk = Configuration.targetSdk
+        minSdk = Configuration.MIN_SDK
+        targetSdk = Configuration.TARGET_SDK
     }
 
     buildTypes {
