@@ -20,15 +20,11 @@ jobs:
           java-version: '21'
       - name: Cache Gradle packages
         id: restore-gradle-cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache@v4
         with:
-          key: ${{ runner.os }}-gradle
+          key: ${{ runner.os }}-gradle-${{ github.run_id }}
           path: ~/.gradle/caches
+          restore-keys: |
+            ${{ runner.os }}-gradle
       - name: Build
         run: ./gradlew build --stacktrace --build-cache
-      - name: Save Cache Gradle
-        if: always()
-        uses: actions/cache/save@v4
-        with:
-          key: ${{ runner.os }}-gradle
-          path: ~/.gradle/caches
