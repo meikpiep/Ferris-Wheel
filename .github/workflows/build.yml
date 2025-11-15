@@ -27,8 +27,8 @@ jobs:
       - name: Build
         run: ./gradlew build --stacktrace --build-cache
       - name: Save Cache Gradle
-        uses: actions/cache/save@v4
         if: always()
+        uses: actions/cache/save@v4
         with:
           key: ${{ runner.os }}-gradle
           path: ~/.gradle/caches
