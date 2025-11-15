@@ -22,6 +22,7 @@ kotest-koin = { group = "io.kotest.extensions", name = "kotest-extensions-koin",
 
 test-mockk = { group = "io.mockk", name = "mockk", version = "1.14.6" }
 
+
 androiduitestingutils-utils = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "utils", version.ref = "androidUiTestingUtils" }
 androiduitestingutils-robolectric = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "robolectric", version.ref = "androidUiTestingUtils" }
 roboelectric = { group = "org.robolectric", name = "robolectric", version = "4.16" }
