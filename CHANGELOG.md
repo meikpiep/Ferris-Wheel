@@ -4,8 +4,20 @@ Change Log
 Unreleased
 ----------
 
+Version 2.1.0 *(2025-11-16)*
+----------------------------
+
+Enhance appearance of Ferris wheel on huge sizes:
+
+* Uses thinner lines.
+* Cabins are smaller sized.
+
+Non-visible changes:
+
+* Use ktLint as linter
 * Use Android Gradle Plugin 8.13.1 (was 8.11.1)
 * Upgrade Android SDK to 36 (was 35)
+* Remove unused dependencies contained in version 2.0.0
 
 Version 2.0.0 *(2025-11-09)*
 ----------------------------
