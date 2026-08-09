@@ -1,7 +1,7 @@
 [versions]
 
 kotlin = "2.2.21"
-android-gradle-plugin = "8.13.1"
+android-gradle-plugin = "8.13.2"
 androidUiTestingUtils = "2.7.0"
 roborazzi = "1.51.0"
 
