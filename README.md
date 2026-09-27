@@ -40,7 +40,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    implementation 'com.github.meikpiep:Ferris-Wheel:1.3.2'
+    implementation 'com.github.meikpiep:Ferris-Wheel:2.2.0'
 }
 ```
 

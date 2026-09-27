@@ -4,6 +4,16 @@ Change Log
 Unreleased
 ----------
 
+Version 2.2.0 *(2026-09-27)*
+----------------------------
+
+Non-visible changes:
+
+* Upgrade Gradle to 9.7.0 (was 9.2.0)
+* Use Android Gradle Plugin 9.4.1 (was 8.13.1)
+* Upgrade Android SDK to 37 (was 36)
+* Upgrade Kotlin to 2.4.10 (was 2.2.21)
+
 Version 2.1.0 *(2025-11-16)*
 ----------------------------
 
