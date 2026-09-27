@@ -7,7 +7,7 @@ roborazzi = "1.75.0"
 
 [libraries]
 
-androidx-ktx = { group = "androidx.core", name = "core-ktx", version = "1.19.0" }
+androidx-ktx = { group = "androidx.core", name = "core-ktx", version = "1.19.1" }
 
 androiduitestingutils-utils = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "utils", version.ref = "androidUiTestingUtils" }
 androiduitestingutils-robolectric = { group = "com.github.sergio-sastre.AndroidUiTestingUtils", name = "robolectric", version.ref = "androidUiTestingUtils" }
